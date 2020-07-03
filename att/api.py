@@ -1,4 +1,5 @@
 from time import sleep
+from typing import Any, Union
 from urllib.parse import unquote_plus
 
 import requests as r
@@ -24,10 +25,8 @@ class API(r.Session):
         super().__init__()
         self.api_auth_name = "x-api-key"
         self.api_key = api_key
-        self.response_full = None
-        self.response_data = None
 
-    def query(self, resource: str, order=None, where=None, **kwargs) -> int:
+    def query(self, resource: str, order=None, where=None, **kwargs) -> Union[Any, int]:
         """Queries API for data from <resource>.
 
         Args:
@@ -77,10 +76,8 @@ class API(r.Session):
         print(f"Requested API resource: '{unquote_plus(_response.request.url)}'")  # type: ignore
 
         if _response.status_code in [200]:
-            self.response_full = _response.json()
-            self.response_data = _response.json()["data"]
             print("Request successfull. Returning 0.")
-            return 0
+            return _response.json()
 
         if _response.status_code in [400, 403, 404, 409, 429]:
             print(f"API returned error status: {_response.status_code}. Returning 1.")

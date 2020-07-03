@@ -5,6 +5,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
+    - [Examples](#examples)
 
 ## About <a name = "about"></a>
 
@@ -29,9 +30,52 @@ To install this package, simply use standard `pip install att` or clone this rep
 att is used as any other library.
 
 ```
-from att import API
+from att.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query([resource], [...params])
 ```
 
+### Examples <a name = "examples"></a>
+
+**Call resource only, with no query parameters**
+
+As is specified in [API documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry), without any query parameters provided, API call will return one "page" of results, which equals of maximum of 30 data entries and 0 "pages" will be skipped.
+
+```
+from att.api import API
+
+api = API("yourAPIkeygoeshere")
+data = api.query("/czso.cz/lide-domy-byty")
+```
+
+**Call resource with limited page size and skipped several pages**
+
+```
+from att.api import API
+
+api = API("yourAPIkeygoeshere")
+data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10)
+```
+
+**Returned data can be ordered**
+
+Pay attention to the quotes usage in the `order` parameter values!
+
+```
+from att.api import API
+
+api = API("yourAPIkeygoeshere")
+data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10, order='"nazev ASC, u01 DESC"')
+```
+
+**Other filtering is possible using `where` parameter**
+
+This is dependent on the data source.
+
+```
+from att.api import API
+
+api = API("yourAPIkeygoeshere")
+data = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
+```
