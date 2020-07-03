@@ -1,8 +1,44 @@
+# pylint: disable=too-many-arguments
+
 from time import sleep
-from typing import Any, Union
+from typing import Any, Dict, List, Union
 from urllib.parse import unquote_plus
 
 import requests as r
+
+
+class ApiResponse:
+    """Class for data response of API resource call.
+    """
+
+    def __init__(
+        self,
+        response=None,
+        data=None,
+        skip=None,
+        count=None,
+        limit=None,
+        info=None,
+        provider=None,
+    ) -> None:
+        """Initialize instance of the class with provided attributes' values.
+
+        Args:
+            response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
+            data (Union[None, List[Any]], optional): only data from response from api call as list. Defaults to None.
+            skip (Union[None, int], optional): value of skipped pages. Defaults to None.
+            count (Union[None, int], optional): value of count. Defaults to None.
+            limit (Union[None, int], optional): value of limit. Defaults to None.
+            info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
+            provider (Union[None, str], optional): value of data provider. Defaults to None.
+        """
+        self.response: Union[None, Dict[str, List[Any]]] = response
+        self.data: Union[None, List[Any]] = data
+        self.skip: Union[None, int] = skip
+        self.count: Union[None, int] = count
+        self.limit: Union[None, int] = limit
+        self.info: Union[None, Dict[str, str]] = info
+        self.provider: Union[None, str] = provider
 
 
 class API(r.Session):
@@ -76,8 +112,18 @@ class API(r.Session):
         print(f"Requested API resource: '{unquote_plus(_response.request.url)}'")  # type: ignore
 
         if _response.status_code in [200]:
-            print("Request successfull. Returning 0.")
-            return _response.json()
+            print("Request successful.")
+            _json = _response.json()
+
+            return ApiResponse(
+                response=_json,
+                data=_json["data"],
+                skip=_json["skip"],
+                count=_json["count"],
+                limit=_json["limit"],
+                info=_json["info"],
+                provider=_json["info"]["provider"],
+            )
 
         if _response.status_code in [400, 403, 404, 409, 429]:
             print(f"API returned error status: {_response.status_code}. Returning 1.")
