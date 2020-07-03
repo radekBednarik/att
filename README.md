@@ -35,7 +35,19 @@ apitalker is used as any other library.
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data = api.query([resource], [...params])
+r = api.query([resource], [...params])
+```
+
+Returned data are treated as instance of a class `ApiResponse`. You can access following attributes:
+
+```
+ApiResponse.response - complete json-decoded call return
+ApiResponse.data - data part of json-decoded call return
+ApiResponse.skip - skip value
+ApiResponse.count - count value
+ApiResponse.limit - limit value
+ApiResponse.info - info value
+ApiResponse.provider - provider value
 ```
 
 ### Examples <a name = "examples"></a>
@@ -48,7 +60,7 @@ As is specified in [API documentation](https://www.api.store/czso.cz/dokumentace
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data = api.query("/czso.cz/lide-domy-byty")
+r = api.query("/czso.cz/lide-domy-byty")
 ```
 
 **Call resource with limited page size and skipped several pages**
@@ -57,7 +69,7 @@ data = api.query("/czso.cz/lide-domy-byty")
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10)
+r = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10)
 ```
 
 **Returned data can be ordered**
@@ -68,7 +80,7 @@ Pay attention to the quotes usage in the `order` parameter values!
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10, order='"nazev ASC, u01 DESC"')
+r = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10, order='"nazev ASC, u01 DESC"')
 ```
 
 **Other filtering is possible using `where` parameter**
@@ -79,5 +91,5 @@ This is dependent on the data source.
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
+r = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
 ```
