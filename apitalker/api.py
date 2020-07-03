@@ -62,7 +62,9 @@ class API(r.Session):
         self.api_auth_name = "x-api-key"
         self.api_key = api_key
 
-    def query(self, resource: str, order=None, where=None, **kwargs) -> Union[Any, int]:
+    def query(
+        self, resource: str, order=None, where=None, **kwargs
+    ) -> Union[ApiResponse, int]:
         """Queries API for data from <resource>.
 
         Args:
@@ -126,12 +128,14 @@ class API(r.Session):
             )
 
         if _response.status_code in [400, 403, 404, 409, 429]:
-            print(f"API returned error status: {_response.status_code}. Returning 1.")
+            print(
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_response.json()} Returning 1."
+            )
             return 1
 
         if _response.status_code in [502, 503, 504]:
             print(
-                f"API returned error status: {_response.status_code}. Retrying for {retries + 1} time..."
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_response.json()}. Retrying..."
             )
             if retries <= 10:
                 sleep(retries * 2)

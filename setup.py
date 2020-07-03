@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-with open('./README.md', mode='r', encoding='utf-8') as f:
+with open("./README.md", mode="r", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
     name="apitalker",
-    version="v0.2.0",
+    version="v0.2.1",
     packages=find_packages(),
     install_requires=["requests"],
     author="Radek 'bednaJedna' Bednarik",
