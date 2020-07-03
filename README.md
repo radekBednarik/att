@@ -1,5 +1,7 @@
 # Apitalker
 
+![Upload Python Package](https://github.com/bednaJedna/att/workflows/Upload%20Python%20Package/badge.svg)
+
 ## Table of Contents
 
 - [About](#about)
