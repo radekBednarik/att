@@ -12,6 +12,7 @@ setup(
     author_email="bednarik.radek@gmail.com",
     description="Python wrapper for using Apitalks API.",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     keywords="api Apitalks wrapper python3 data library utility",
     url="https://github.com/bednaJedna/att",
     classifiers=[
