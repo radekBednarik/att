@@ -4,8 +4,8 @@ with open('./README.md', mode='r', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name="att",
-    version="v0.1.0",
+    name="apitalker",
+    version="v0.1.1",
     packages=find_packages(),
     install_requires=["requests"],
     author="Radek 'bednaJedna' Bednarik",

@@ -1,4 +1,4 @@
-# Att (Apitalks Talker)
+# Apitalker
 
 ## Table of Contents
 
@@ -23,14 +23,14 @@ What things you need to install the software.
 
 ### Installing
 
-To install this package, simply use standard `pip install att` or clone this repo and run `python setup.py install`.
+To install this package, simply use standard `pip install apitalker` or clone this repo and run `python setup.py install`.
 
 ## Usage <a name = "usage"></a>
 
-att is used as any other library.
+apitalker is used as any other library.
 
 ```
-from att.api import API
+from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query([resource], [...params])
@@ -43,7 +43,7 @@ data = api.query([resource], [...params])
 As is specified in [API documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry), without any query parameters provided, API call will return one "page" of results, which equals of maximum of 30 data entries and 0 "pages" will be skipped.
 
 ```
-from att.api import API
+from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query("/czso.cz/lide-domy-byty")
@@ -52,7 +52,7 @@ data = api.query("/czso.cz/lide-domy-byty")
 **Call resource with limited page size and skipped several pages**
 
 ```
-from att.api import API
+from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10)
@@ -63,7 +63,7 @@ data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10)
 Pay attention to the quotes usage in the `order` parameter values!
 
 ```
-from att.api import API
+from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10, order='"nazev ASC, u01 DESC"')
@@ -74,7 +74,7 @@ data = api.query("/czso.cz/lide-domy-byty", limit=10, skip=10, order='"nazev ASC
 This is dependent on the data source.
 
 ```
-from att.api import API
+from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 data = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
