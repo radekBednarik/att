@@ -9,6 +9,7 @@ import requests as r
 
 class ApiResponse:
     """Class for data response of API resource call.
+
     """
 
     def __init__(
@@ -31,6 +32,7 @@ class ApiResponse:
             limit (Union[None, int], optional): value of limit. Defaults to None.
             info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
             provider (Union[None, str], optional): value of data provider. Defaults to None.
+
         """
         self.response: Union[None, Dict[str, List[Any]]] = response
         self.data: Union[None, List[Any]] = data
@@ -43,6 +45,7 @@ class ApiResponse:
 
 class ApiError:
     """Class for data response error return of API resource call.
+
     """
 
     def __init__(
@@ -56,6 +59,7 @@ class ApiError:
             status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
             name (Union[None, str], optional): name of the error message. Defaults to None.
             message (Union[None, str], optional): body of the error message. Defaults to None.
+            
         """
         self.response: Union[None, Dict[str, Dict[str, Any]]] = response
         self.error: Union[None, Dict[str, Any]] = error
@@ -69,6 +73,7 @@ class API(r.Session):
 
     Args:
         r (r.Session): inheriting requests.Session class methods
+
     """
 
     base_url = "https://api.apitalks.store"
@@ -80,6 +85,7 @@ class API(r.Session):
 
         Args:
             api_key (str): api key. You need to register to Apitalks (free) to get it
+
         """
         super().__init__()
         self.api_auth_name = "x-api-key"
@@ -94,12 +100,10 @@ class API(r.Session):
             resource (str): API resource path as specified in Apitalks documentation
 
         Kwargs:
-            order (str): order output of returned data of api call. Argument has to adhere to formatting standard
-                as specified in Apitalks documentation.
+            order (str): order output of returned data of api call. Argument has to adhere to Apitalks documentation.
                 e.g `order='"id ASC, nazev DESC"'`. See https://www.api.store/czso.cz/dokumentace#section/Query-parametry
 
-            where (str): specifiy filtering of the returned data of api call. Argument has to adhere to formatting standard
-                as specified in Apitalks documentation.
+            where (str): specifiy filtering of the returned data of api call. Argument has to adhere to Apitalks documentation.
                 e.g. `where='"rok":{"gt":2000}'` or `where='"rok=2000,"barva":"red"'
 
             limit (int): add limit to set limit for one page of returned data via api call. 
@@ -113,6 +117,7 @@ class API(r.Session):
                 ApiResponse: class instance with attributes of successfull API call
                 ApiError: class instance with attributes of unsuccessfull API call
                 int: 1, if some other bad stuff happened
+
         """
         keys_ = list(kwargs.keys())
         retries = kwargs["retries"] if "retries" in keys_ else 0

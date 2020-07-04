@@ -2,5 +2,6 @@
     "python.pythonPath": "/home/radek/.local/share/virtualenvs/att-5fC-JPbT/bin/python",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
-    "python.linting.prospectorEnabled": true
+    "python.linting.prospectorEnabled": true,
+    "restructuredtext.confPath": "${workspaceFolder}/docs/source"
 }
