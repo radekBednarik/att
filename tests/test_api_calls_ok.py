@@ -8,7 +8,7 @@ from apitalker.api import API, ApiResponse
     ids=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
 )
 def valid_resource(request):
-    api = API("ktNTwDdRcL5K1r7xFCd5TaEHSbm6as9U1njPNAm5")
+    api = API("")
     return api.query(request.param)
 
 
