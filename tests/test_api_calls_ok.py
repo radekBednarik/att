@@ -1,14 +1,16 @@
 import pytest
 
 from apitalker.api import API, ApiResponse
+# not in repo
+from tests.auth import API_KEY
 
 
 @pytest.fixture(
-    params=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
+    params=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarn"],
     ids=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
 )
 def valid_resource(request):
-    api = API("")
+    api = API(API_KEY)
     return api.query(request.param)
 
 

@@ -138,6 +138,7 @@ class API(r.Session):
             params={"filter": filter_},
         )
         _json = _response.json()
+        _keys = list(_json.keys())
         print(f"Requested API resource: '{unquote_plus(_response.request.url)}'")  # type: ignore
 
         if _response.status_code in [200]:
@@ -145,29 +146,29 @@ class API(r.Session):
 
             return ApiResponse(
                 response=_json,
-                data=_json["data"],
-                skip=_json["skip"],
-                count=_json["count"],
-                limit=_json["limit"],
-                info=_json["info"],
-                provider=_json["info"]["provider"],
+                data=_json["data"] if "data" in _keys else None,
+                skip=_json["skip"] if "skip" in _keys else None,
+                count=_json["count"] if "count" in _keys else None,
+                limit=_json["limit"] if "limit" in _keys else None,
+                info=_json["info"] if "info" in _keys else None,
+                provider=_json["info"]["provider"] if "info" in _keys else None,
             )
 
         if _response.status_code in [400, 403, 404, 409, 429]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json['error']['message']}."
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json}."
             )
             return ApiError(
                 response=_json,
-                error=_json["error"],
-                status_code=_json["error"]["statusCode"],
-                name=_json["error"]["name"],
-                message=_json["error"]["message"],
+                error=_json["error"] if "error" in _keys else None,
+                status_code=_json["error"]["statusCode"] if "error" in _keys else None,
+                name=_json["error"]["name"] if "error" in _keys else None,
+                message=_json["error"]["message"] if "error" in _keys else None,
             )
 
         if _response.status_code in [502, 503, 504]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json['error']['message']}. Retrying..."
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json}. Retrying..."
             )
             if retries <= 10:
                 sleep(retries * 2)
@@ -184,10 +185,10 @@ class API(r.Session):
             print(f"Retried {retries} times. That is enough.")
             return ApiError(
                 response=_json,
-                error=_json["error"],
-                status_code=_json["error"]["statusCode"],
-                name=_json["error"]["name"],
-                message=_json["error"]["message"],
+                error=_json["error"] if "error" in _keys else None,
+                status_code=_json["error"]["statusCode"] if "error" in _keys else None,
+                name=_json["error"]["name"] if "error" in _keys else None,
+                message=_json["error"]["message"] if "error" in _keys else None,
             )
 
         return 1
