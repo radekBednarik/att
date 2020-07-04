@@ -7,7 +7,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
-    - [Examples](#examples)
+  - [Examples](#examples)
 
 ## About <a name = "about"></a>
 
@@ -50,6 +50,16 @@ ApiResponse.info - info value
 ApiResponse.provider - provider value
 ```
 
+Error messages in case there are some problems with api call, are handled by class `ApiError`. You can following attributes:
+
+```
+ApiError.response - complete json-decoded call return
+ApiError.error - error part of call return
+ApiError.status_code - HTTP status code
+ApiError.name - name of the error message
+ApiError.message - error message itself
+```
+
 ### Examples <a name = "examples"></a>
 
 **Call resource only, with no query parameters**
@@ -63,7 +73,7 @@ api = API("yourAPIkeygoeshere")
 r = api.query("/czso.cz/lide-domy-byty")
 ```
 
-**Call resource with limited page size and skipped several pages**
+**Call resource with limited page size and skipped one page of the same size**
 
 ```
 from apitalker.api import API

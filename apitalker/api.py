@@ -41,6 +41,29 @@ class ApiResponse:
         self.provider: Union[None, str] = provider
 
 
+class ApiError:
+    """Class for data response error return of API resource call.
+    """
+
+    def __init__(
+        self, response=None, error=None, status_code=None, name=None, message=None
+    ) -> None:
+        """Initialize instance of the class with provided attributes' values.
+
+        Args:
+            response (Union[None, Dict[str, Dict[str, Any]]], optional): complete response message as dict. Defaults to None.
+            error (Union[None, Dict[str, Any]], optional): error part of the respone message as dict. Defaults to None.
+            status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
+            name (Union[None, str], optional): name of the error message. Defaults to None.
+            message (Union[None, str], optional): body of the error message. Defaults to None.
+        """
+        self.response: Union[None, Dict[str, Dict[str, Any]]] = response
+        self.error: Union[None, Dict[str, Any]] = error
+        self.status_code: Union[None, int] = status_code
+        self.name: Union[None, str] = name
+        self.message: Union[None, str] = message
+
+
 class API(r.Session):
     """API class for connection and getting data from Apitalks API resources.
 
@@ -64,7 +87,7 @@ class API(r.Session):
 
     def query(
         self, resource: str, order=None, where=None, **kwargs
-    ) -> Union[ApiResponse, int]:
+    ) -> Union[ApiResponse, ApiError, int]:
         """Queries API for data from <resource>.
 
         Args:
@@ -86,7 +109,10 @@ class API(r.Session):
                 See https://www.api.store/czso.cz/dokumentace#section/Query-parametry
             
         Returns:
-            (int): 0: success; 1: failure
+            (Union[ApiResponse, ApiError, int])
+                ApiResponse: class instance with attributes of successfull API call
+                ApiError: class instance with attributes of unsuccessfull API call
+                int: 1, if some other bad stuff happened
         """
         keys_ = list(kwargs.keys())
         retries = kwargs["retries"] if "retries" in keys_ else 0
@@ -111,11 +137,11 @@ class API(r.Session):
             headers={self.api_auth_name: self.api_key},
             params={"filter": filter_},
         )
+        _json = _response.json()
         print(f"Requested API resource: '{unquote_plus(_response.request.url)}'")  # type: ignore
 
         if _response.status_code in [200]:
             print("Request successful.")
-            _json = _response.json()
 
             return ApiResponse(
                 response=_json,
@@ -129,13 +155,19 @@ class API(r.Session):
 
         if _response.status_code in [400, 403, 404, 409, 429]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_response.json()} Returning 1."
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json['error']['message']}."
             )
-            return 1
+            return ApiError(
+                response=_json,
+                error=_json["error"],
+                status_code=_json["error"]["statusCode"],
+                name=_json["error"]["name"],
+                message=_json["error"]["message"],
+            )
 
         if _response.status_code in [502, 503, 504]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_response.json()}. Retrying..."
+                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json['error']['message']}. Retrying..."
             )
             if retries <= 10:
                 sleep(retries * 2)
@@ -149,8 +181,13 @@ class API(r.Session):
                     skip=skip_,
                     **kwargs,
                 )
-
-            print(f"Retried {retries} times. Returning 1.")
-            return 1
+            print(f"Retried {retries} times. That is enough.")
+            return ApiError(
+                response=_json,
+                error=_json["error"],
+                status_code=_json["error"]["statusCode"],
+                name=_json["error"]["name"],
+                message=_json["error"]["message"],
+            )
 
         return 1
