@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Apitalker’s documentation! &#8212; Apitalker 0.3.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-apitalker-s-documentation">
+<h1>Welcome to Apitalker’s documentation!<a class="headerlink" href="#welcome-to-apitalker-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Apitalker is a Python wrapper for Apitalks REST API service.</p>
+<p><strong>Author</strong>: Radek ‘bednaJedna’ Bednarik</p>
+<p><strong>Installation</strong>: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">apitalker</span></code></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="module-apitalker.api">
+<span id="apitalker-api-module"></span><h1>Apitalker.API module<a class="headerlink" href="#module-apitalker.api" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="apitalker.api.API">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">API</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_key</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.API" title="Permalink to this definition">¶</a></dt>
+<dd><p>API class for connection and getting data from Apitalks API resources.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>r (r.Session): inheriting requests.Session class methods</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="apitalker.api.API.query">
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">order</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">where</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span><a class="reference internal" href="#apitalker.api.ApiResponse" title="apitalker.api.ApiResponse">apitalker.api.ApiResponse</a><span class="p">, </span><a class="reference internal" href="#apitalker.api.ApiError" title="apitalker.api.ApiError">apitalker.api.ApiError</a><span class="p">, </span>int<span class="p">]</span><a class="headerlink" href="#apitalker.api.API.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries API for data from &lt;resource&gt;.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>resource (str): API resource path as specified in Apitalks documentation</p>
+</dd>
+<dt>Kwargs:</dt><dd><dl class="simple">
+<dt>order (str): order output of returned data of api call. Argument has to adhere to Apitalks documentation.</dt><dd><p>e.g <cite>order=‘“id ASC, nazev DESC”’</cite>. See <a class="reference external" href="https://www.api.store/czso.cz/dokumentace#section/Query-parametry">https://www.api.store/czso.cz/dokumentace#section/Query-parametry</a></p>
+</dd>
+<dt>where (str): specifiy filtering of the returned data of api call. Argument has to adhere to Apitalks documentation.</dt><dd><p>e.g. <cite>where=‘“rok”:{“gt”:2000}’</cite> or <a href="#id1"><span class="problematic" id="id2">`</span></a>where=‘“rok=2000,”barva”:”red”’</p>
+</dd>
+<dt>limit (int): add limit to set limit for one page of returned data via api call. </dt><dd><p>See: <a class="reference external" href="https://www.api.store/czso.cz/dokumentace#section/Query-parametry">https://www.api.store/czso.cz/dokumentace#section/Query-parametry</a></p>
+</dd>
+<dt>skip (int): add skip to set number of skipped pages via api call. Value should be same, as for argument &lt;limit&gt;.</dt><dd><p>See <a class="reference external" href="https://www.api.store/czso.cz/dokumentace#section/Query-parametry">https://www.api.store/czso.cz/dokumentace#section/Query-parametry</a></p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>(Union[ApiResponse, ApiError, int])</dt><dd><p>ApiResponse: class instance with attributes of successfull API call
+ApiError: class instance with attributes of unsuccessfull API call
+int: 1, if some other bad stuff happened</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.api.ApiError">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">ApiError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">error</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">status_code</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.ApiError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for data response error return of API resource call.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.api.ApiResponse">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">ApiResponse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">skip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">limit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">info</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">provider</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.ApiResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for data response of API resource call.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Apitalker</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Radek 'bednaJedna' Bednarik.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
