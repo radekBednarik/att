@@ -15,6 +15,8 @@
 
 Python3 library. Wrapper for [Apitalks API](https://www.api.store/) calls. Enables simple call for api resource via `query` method with optional use of available parameters, as specified in [Apitalks documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry).
 
+Codebase documentation is [Here](https://att.readthedocs.io/en/latest/).
+
 ## Getting Started <a name = "getting_started"></a>
 
 These instructions will get you up and running.
