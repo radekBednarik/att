@@ -6,7 +6,7 @@ from tests.auth import API_KEY
 
 
 @pytest.fixture(
-    params=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarn"],
+    params=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
     ids=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
 )
 def valid_resource(request):
