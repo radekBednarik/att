@@ -1,6 +1,8 @@
 # Apitalker
 
 ![Upload Python Package](https://github.com/bednaJedna/att/workflows/Upload%20Python%20Package/badge.svg)
+[![Documentation Status](https://readthedocs.org/projects/att/badge/?version=latest)](https://att.readthedocs.io/en/latest/?badge=latest)
+
 
 ## Table of Contents
 
