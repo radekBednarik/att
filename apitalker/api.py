@@ -2,7 +2,7 @@
 # pylint: disable=too-many-locals
 
 from time import sleep
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Iterable, List, Union
 from urllib.parse import unquote_plus
 
 import requests as r
@@ -14,7 +14,7 @@ class ApiResponse:
     Keyword Args:
         resource (Union[None, str], optional): full resource url.
         response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
-        data (Union[None, List[Any]], optional): only data from response from api call as list. Defaults to None.
+        data (Union[None, Iterable[Any]], optional): only data from response from api call as list. Defaults to None.
         skip (Union[None, int], optional): value of skipped pages. Defaults to None.
         count (Union[None, int], optional): value of count. Defaults to None.
         limit (Union[None, int], optional): value of limit. Defaults to None.
@@ -36,7 +36,7 @@ class ApiResponse:
     ) -> None:
         self.resource: Union[None, str] = resource
         self.response: Union[None, Dict[str, List[Any]]] = response
-        self.data: Union[None, List[Any]] = data
+        self.data: Union[None, Iterable[Any]] = data
         self.skip: Union[None, int] = skip
         self.count: Union[None, int] = count
         self.limit: Union[None, int] = limit
@@ -203,3 +203,36 @@ class API(r.Session):
             )
 
         return 1
+
+    def get_all(self, resource: str, order=None, where=None, **kwargs) -> List[Any]:
+        """Get all available data from given API <resource>. Utilizes `api.API.query()` method.
+        Sends API calls with incremented <skip> parameter, until `ApiResponse.data` array is returned as [].
+        Then all fetched data are returned as unordered list (array).
+
+        Args:
+            resource (str): API resource path
+            order (Union[None, str], optional): order the returned data of !individual! API call. Defaults to None.
+            where (Union[None, str], optional): filter the returned data. Defaults to None.
+
+        Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
+
+        Returns:
+            List[Any]: unordered list of all data provided by called API resource.
+        """
+
+        keys = list(kwargs.keys())
+        limit = kwargs["limit"] if "limit" in keys else self.max_limit
+        skip = kwargs["skip"] if "skip" in keys else self.default_skip
+
+        output: List[Any] = []
+
+        while True:
+            r = self.query(resource, order=order, where=where, limit=limit, skip=skip)
+
+            if (isinstance(r, ApiResponse)) and (r.data != []):
+                output += r.data
+                skip += r.count
+            else:
+                break
+
+        return output
