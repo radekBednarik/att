@@ -33,6 +33,8 @@ release = '0.3.0'
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']
 
+master_doc = 'index'
+
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
