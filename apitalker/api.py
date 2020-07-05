@@ -10,6 +10,15 @@ import requests as r
 class ApiResponse:
     """Class for data response of API resource call.
 
+    Keyword Args:
+        response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
+        data (Union[None, List[Any]], optional): only data from response from api call as list. Defaults to None.
+        skip (Union[None, int], optional): value of skipped pages. Defaults to None.
+        count (Union[None, int], optional): value of count. Defaults to None.
+        limit (Union[None, int], optional): value of limit. Defaults to None.
+        info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
+        provider (Union[None, str], optional): value of data provider. Defaults to None.
+
     """
 
     def __init__(
@@ -22,18 +31,6 @@ class ApiResponse:
         info=None,
         provider=None,
     ) -> None:
-        """Initialize instance of the class with provided attributes' values.
-
-        Args:
-            response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
-            data (Union[None, List[Any]], optional): only data from response from api call as list. Defaults to None.
-            skip (Union[None, int], optional): value of skipped pages. Defaults to None.
-            count (Union[None, int], optional): value of count. Defaults to None.
-            limit (Union[None, int], optional): value of limit. Defaults to None.
-            info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
-            provider (Union[None, str], optional): value of data provider. Defaults to None.
-
-        """
         self.response: Union[None, Dict[str, List[Any]]] = response
         self.data: Union[None, List[Any]] = data
         self.skip: Union[None, int] = skip
@@ -46,21 +43,18 @@ class ApiResponse:
 class ApiError:
     """Class for data response error return of API resource call.
 
-    """
-
-    def __init__(
-        self, response=None, error=None, status_code=None, name=None, message=None
-    ) -> None:
-        """Initialize instance of the class with provided attributes' values.
-
-        Args:
+        Keyword Args:
             response (Union[None, Dict[str, Dict[str, Any]]], optional): complete response message as dict. Defaults to None.
             error (Union[None, Dict[str, Any]], optional): error part of the respone message as dict. Defaults to None.
             status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
             name (Union[None, str], optional): name of the error message. Defaults to None.
             message (Union[None, str], optional): body of the error message. Defaults to None.
-            
-        """
+
+    """
+
+    def __init__(
+        self, response=None, error=None, status_code=None, name=None, message=None
+    ) -> None:
         self.response: Union[None, Dict[str, Dict[str, Any]]] = response
         self.error: Union[None, Dict[str, Any]] = error
         self.status_code: Union[None, int] = status_code
@@ -70,9 +64,6 @@ class ApiError:
 
 class API(r.Session):
     """API class for connection and getting data from Apitalks API resources.
-
-    Args:
-        r (r.Session): inheriting requests.Session class methods
 
     """
 
@@ -94,23 +85,21 @@ class API(r.Session):
     def query(
         self, resource: str, order=None, where=None, **kwargs
     ) -> Union[ApiResponse, ApiError, int]:
-        """Queries API for data from <resource>.
+        """Queries API for data from <resource>. See https://www.api.store/czso.cz/dokumentace#section/Query-parametry
 
         Args:
             resource (str): API resource path as specified in Apitalks documentation
 
-        Kwargs:
-            order (str): order output of returned data of api call. Argument has to adhere to Apitalks documentation.
-                e.g `order='"id ASC, nazev DESC"'`. See https://www.api.store/czso.cz/dokumentace#section/Query-parametry
+        Keyword Args:
+            order (str): order output of returned data of api call.
+                e.g `order='"id ASC, nazev DESC"'`. 
 
-            where (str): specifiy filtering of the returned data of api call. Argument has to adhere to Apitalks documentation.
-                e.g. `where='"rok":{"gt":2000}'` or `where='"rok=2000,"barva":"red"'
+            where (str): specifiy filtering of the returned data of api call.
+                e.g. `where='"rok":{"gt":2000}'` or `where='"rok=2000,"barva":"red"'`
 
             limit (int): add limit to set limit for one page of returned data via api call. 
-                See: https://www.api.store/czso.cz/dokumentace#section/Query-parametry
 
-            skip (int): add skip to set number of skipped pages via api call. Value should be same, as for argument <limit>.
-                See https://www.api.store/czso.cz/dokumentace#section/Query-parametry
+            skip (int): add skip to set number of skipped data entries via api call.
             
         Returns:
             (Union[ApiResponse, ApiError, int])

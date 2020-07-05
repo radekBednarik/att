@@ -292,3 +292,5 @@ $RECYCLE.BIN/
 tests/auth.py
 tests/__init__.py
 test.py
+
+!docs/build/
