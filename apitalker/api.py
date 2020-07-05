@@ -65,6 +65,9 @@ class ApiError:
 class API(r.Session):
     """API class for connection and getting data from Apitalks API resources.
 
+    Args:
+        api_key (str): api key. You need to register to Apitalks (free) to get it
+
     """
 
     base_url = "https://api.apitalks.store"
@@ -73,10 +76,6 @@ class API(r.Session):
 
     def __init__(self, api_key: str) -> None:
         """Initializes the class.
-
-        Args:
-            api_key (str): api key. You need to register to Apitalks (free) to get it
-
         """
         super().__init__()
         self.api_auth_name = "x-api-key"
@@ -104,7 +103,9 @@ class API(r.Session):
         Returns:
             (Union[ApiResponse, ApiError, int])
                 ApiResponse: class instance with attributes of successfull API call
+
                 ApiError: class instance with attributes of unsuccessfull API call
+                
                 int: 1, if some other bad stuff happened
 
         """
