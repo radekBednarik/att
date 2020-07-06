@@ -213,25 +213,29 @@ class API(r.Session):
             resource (str): API resource path
             order (Union[None, str], optional): order the returned data of !individual! API call. Defaults to None.
             where (Union[None, str], optional): filter the returned data. Defaults to None.
+            sleep (Union[None, int], optional): set in seconds, how long should method wait between each api call. Defaults to None.
 
         Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
 
         Returns:
-            List[Any]: unordered list of all data provided by called API resource.
+            List[Any]: unordered list of all data provided by called API resource or `[]` if `api.API.query()` fails.
         """
 
         keys = list(kwargs.keys())
         limit = kwargs["limit"] if "limit" in keys else self.max_limit
         skip = kwargs["skip"] if "skip" in keys else self.default_skip
+        sleep_ = kwargs["sleep"] if "sleep" in keys else None
 
         output: List[Any] = []
 
         while True:
             r = self.query(resource, order=order, where=where, limit=limit, skip=skip)
-
+            # self.query() already solves bad API calls, i.e. HTTP errors, including console messaging
             if (isinstance(r, ApiResponse)) and (r.data != []):
                 output += r.data
                 skip += r.count
+                if sleep_ is not None:
+                    sleep(sleep_)
             else:
                 break
 
