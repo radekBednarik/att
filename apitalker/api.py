@@ -108,9 +108,9 @@ class API(r.Session):
             where (str): specifiy filtering of the returned data of api call.
                 e.g. `where='"rok":{"gt":2000}'` or `where='"rok=2000,"barva":"red"'`
 
-            limit (int): add limit to set limit for one page of returned data via api call. 
+            limit (int): add limit to set limit for one page of returned data via api call. Defaults to `max_limit`.
 
-            skip (int): add skip to set number of skipped data entries via api call.
+            skip (int): add skip to set number of skipped data entries via api call. Defaults to `default_skip`.
             
         Returns:
             (Union[ApiResponse, ApiError, int])
@@ -211,9 +211,13 @@ class API(r.Session):
 
         Args:
             resource (str): API resource path
+        
+        Keyword Args:
             order (Union[None, str], optional): order the returned data of !individual! API call. Defaults to None.
             where (Union[None, str], optional): filter the returned data. Defaults to None.
             sleep (Union[None, int], optional): set in seconds, how long should method wait between each api call. Defaults to None.
+            limit (int): add limit to set limit for one page of returned data via api call. Defaults to `max_limit`.
+            skip (int): add skip to set number of skipped data entries via api call. Defaults to `default_skip`.
 
         Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
 
