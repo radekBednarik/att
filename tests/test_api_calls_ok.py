@@ -22,15 +22,27 @@ def valid_single_resource(request):
     ids=["/czso.cz/lide-domy-byty", "/cnb.cz/smenarny"],
 )
 def valid_whole_resource(request):
-    api = API(API_KEY)
-    return api.get_all(request.param)
+    return request.param
 
 
 class TestWorkingApiCalls:
     def test_query(self, valid_single_resource):
         assert isinstance(valid_single_resource, ApiResponse) is True
 
-    def test_get_all_data(self, valid_whole_resource):
-        assert isinstance(valid_whole_resource, list) is True
-        assert len(valid_whole_resource) > 0
-        assert all([isinstance(item, dict) for item in valid_whole_resource]) is True
+    def test_get_all_no_params(self, valid_whole_resource):
+        api = API(API_KEY)
+        data = api.get_all(valid_whole_resource, sleep=0.1)
+
+        assert isinstance(data, list) is True
+        assert len(data) > 0
+        assert all([isinstance(item, dict) for item in data]) is True
+
+    def test_get_all_params_set_01(self, valid_whole_resource):
+        api = API(API_KEY)
+        data = api.get_all(
+            valid_whole_resource, limit=10, skip=30, order='"id ASC"', sleep=0.1,
+        )
+
+        assert isinstance(data, list) is True
+        assert len(data) > 0
+        assert all([isinstance(item, dict) for item in data]) is True
