@@ -1,7 +1,8 @@
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
 
 from time import sleep
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Iterable, List, Union
 from urllib.parse import unquote_plus
 
 import requests as r
@@ -11,8 +12,9 @@ class ApiResponse:
     """Class for data response of API resource call.
 
     Keyword Args:
+        resource (Union[None, str], optional): full resource url.
         response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
-        data (Union[None, List[Any]], optional): only data from response from api call as list. Defaults to None.
+        data (Union[None, Iterable[Any]], optional): only data from response from api call as list. Defaults to None.
         skip (Union[None, int], optional): value of skipped pages. Defaults to None.
         count (Union[None, int], optional): value of count. Defaults to None.
         limit (Union[None, int], optional): value of limit. Defaults to None.
@@ -23,6 +25,7 @@ class ApiResponse:
 
     def __init__(
         self,
+        resource=None,
         response=None,
         data=None,
         skip=None,
@@ -31,8 +34,9 @@ class ApiResponse:
         info=None,
         provider=None,
     ) -> None:
+        self.resource: Union[None, str] = resource
         self.response: Union[None, Dict[str, List[Any]]] = response
-        self.data: Union[None, List[Any]] = data
+        self.data: Union[None, Iterable[Any]] = data
         self.skip: Union[None, int] = skip
         self.count: Union[None, int] = count
         self.limit: Union[None, int] = limit
@@ -44,6 +48,7 @@ class ApiError:
     """Class for data response error return of API resource call.
 
         Keyword Args:
+            resource (Union[None, str], optional): full resource url.
             response (Union[None, Dict[str, Dict[str, Any]]], optional): complete response message as dict. Defaults to None.
             error (Union[None, Dict[str, Any]], optional): error part of the respone message as dict. Defaults to None.
             status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
@@ -53,8 +58,15 @@ class ApiError:
     """
 
     def __init__(
-        self, response=None, error=None, status_code=None, name=None, message=None
+        self,
+        resource=None,
+        response=None,
+        error=None,
+        status_code=None,
+        name=None,
+        message=None,
     ) -> None:
+        self.resource: Union[None, str] = resource
         self.response: Union[None, Dict[str, Dict[str, Any]]] = response
         self.error: Union[None, Dict[str, Any]] = error
         self.status_code: Union[None, int] = status_code
@@ -109,6 +121,7 @@ class API(r.Session):
                 int: 1, if some other bad stuff happened
 
         """
+        resource = f"{self.base_url}{resource}"
         keys_ = list(kwargs.keys())
         retries = kwargs["retries"] if "retries" in keys_ else 0
 
@@ -128,7 +141,7 @@ class API(r.Session):
 
         # send api request
         _response = self.get(
-            f"{self.base_url}{resource}",
+            resource,
             headers={self.api_auth_name: self.api_key},
             params={"filter": filter_},
         )
@@ -140,6 +153,7 @@ class API(r.Session):
             print("Request successful.")
 
             return ApiResponse(
+                resource=resource,
                 response=_json,
                 data=_json["data"] if "data" in _keys else None,
                 skip=_json["skip"] if "skip" in _keys else None,
@@ -154,6 +168,7 @@ class API(r.Session):
                 f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json}."
             )
             return ApiError(
+                resource=resource,
                 response=_json,
                 error=_json["error"] if "error" in _keys else None,
                 status_code=_json["error"]["statusCode"] if "error" in _keys else None,
@@ -179,6 +194,7 @@ class API(r.Session):
                 )
             print(f"Retried {retries} times. That is enough.")
             return ApiError(
+                resource=resource,
                 response=_json,
                 error=_json["error"] if "error" in _keys else None,
                 status_code=_json["error"]["statusCode"] if "error" in _keys else None,
@@ -187,3 +203,40 @@ class API(r.Session):
             )
 
         return 1
+
+    def get_all(self, resource: str, order=None, where=None, **kwargs) -> List[Any]:
+        """Get all available data from given API <resource>. Utilizes `api.API.query()` method.
+        Sends API calls with incremented <skip> parameter, until `ApiResponse.data` array is returned as [].
+        Then all fetched data are returned as unordered list (array).
+
+        Args:
+            resource (str): API resource path
+            order (Union[None, str], optional): order the returned data of !individual! API call. Defaults to None.
+            where (Union[None, str], optional): filter the returned data. Defaults to None.
+            sleep (Union[None, int], optional): set in seconds, how long should method wait between each api call. Defaults to None.
+
+        Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
+
+        Returns:
+            List[Any]: unordered list of all data provided by called API resource or `[]` if `api.API.query()` fails.
+        """
+
+        keys = list(kwargs.keys())
+        limit = kwargs["limit"] if "limit" in keys else self.max_limit
+        skip = kwargs["skip"] if "skip" in keys else self.default_skip
+        sleep_ = kwargs["sleep"] if "sleep" in keys else None
+
+        output: List[Any] = []
+
+        while True:
+            r = self.query(resource, order=order, where=where, limit=limit, skip=skip)
+            # self.query() already solves bad API calls, i.e. HTTP errors, including console messaging
+            if (isinstance(r, ApiResponse)) and (r.data != []):
+                output += r.data
+                skip += r.count
+                if sleep_ is not None:
+                    sleep(sleep_)
+            else:
+                break
+
+        return output
