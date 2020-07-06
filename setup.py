@@ -5,7 +5,7 @@ with open("./README.md", mode="r", encoding="utf-8") as f:
 
 setup(
     name="apitalker",
-    version="v0.3.1",
+    version="v0.4.0",
     packages=find_packages(),
     install_requires=["requests"],
     author="Radek 'bednaJedna' Bednarik",
