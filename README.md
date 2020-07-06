@@ -42,29 +42,15 @@ api = API("yourAPIkeygoeshere")
 r = api.query([resource], [...params])
 ```
 
-Returned data are treated as instance of a class `ApiResponse`. You can access following attributes:
+Returned data are treated as instance of a class `ApiResponse`. 
 
-```
-ApiResponse.response - complete json-decoded call return
-ApiResponse.data - data part of json-decoded call return
-ApiResponse.skip - skip value
-ApiResponse.count - count value
-ApiResponse.limit - limit value
-ApiResponse.info - info value
-ApiResponse.provider - provider value
-```
-
-Error messages in case there are some problems with api call, are handled by class `ApiError`. You can following attributes:
-
-```
-ApiError.response - complete json-decoded call return
-ApiError.error - error part of call return
-ApiError.status_code - HTTP status code
-ApiError.name - name of the error message
-ApiError.message - error message itself
-```
+Error messages in case there are some problems with api call, are handled by class `ApiError`.
 
 ### Examples <a name = "examples"></a>
+
+#### api.API.query()
+
+Calls given API resource and returns one "page" of the data.
 
 **Call resource only, with no query parameters**
 
@@ -106,4 +92,15 @@ from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
 r = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
+```
+
+#### api.API.get_all()
+
+Calls given API resource utilizing `api.API.query()` repeatedly and returns all data of given resource.
+
+```
+from apitalker.api import API
+
+api = API("yourAPIkeygoeshere")
+r = api.get_all("/czso.cz/lide-domy-byty")
 ```
