@@ -17,15 +17,15 @@ def valid_resource(request):
 
 
 class TestWorkingApiCalls:
+    api = API(API_KEY)
+
     def test_query(self, valid_resource):
-        api = API(API_KEY)
-        r = api.query(valid_resource)
+        r = self.api.query(valid_resource)
 
         assert isinstance(r, ApiResponse) is True
 
     def test_get_all_no_params(self, valid_resource):
-        api = API(API_KEY)
-        data, error = api.get_all(valid_resource, sleep=0.1)
+        data, error = self.api.get_all(valid_resource, sleep=0.1)
 
         assert error is None
         assert isinstance(data, list) is True
@@ -33,8 +33,7 @@ class TestWorkingApiCalls:
         assert all([isinstance(item, dict) for item in data]) is True
 
     def test_get_all_params_set_01(self, valid_resource):
-        api = API(API_KEY)
-        data, error = api.get_all(
+        data, error = self.api.get_all(
             valid_resource, limit=10, skip=30, order='"id ASC"', sleep=0.1,
         )
 
