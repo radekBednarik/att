@@ -25,18 +25,20 @@ class TestWorkingApiCalls:
 
     def test_get_all_no_params(self, valid_resource):
         api = API(API_KEY)
-        data = api.get_all(valid_resource, sleep=0.1)
+        data, error = api.get_all(valid_resource, sleep=0.1)
 
+        assert error is None
         assert isinstance(data, list) is True
         assert len(data) > 0
         assert all([isinstance(item, dict) for item in data]) is True
 
     def test_get_all_params_set_01(self, valid_resource):
         api = API(API_KEY)
-        data = api.get_all(
+        data, error = api.get_all(
             valid_resource, limit=10, skip=30, order='"id ASC"', sleep=0.1,
         )
 
+        assert error is None
         assert isinstance(data, list) is True
         assert len(data) > 0
         assert all([isinstance(item, dict) for item in data]) is True

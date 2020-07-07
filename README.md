@@ -13,9 +13,11 @@
 
 ## About <a name = "about"></a>
 
-Python3 library. Wrapper for [Apitalks API](https://www.api.store/) calls. Enables simple call for api resource via `query` method with optional use of available parameters, as specified in [Apitalks documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry).
+Python3 library. Wrapper for [Apitalks API](https://www.api.store/) calls. Enables simple calls for api resources with optional use of available parameters, as specified in [Apitalks documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry).
 
-Codebase documentation is [Here](https://att.readthedocs.io/en/latest/).
+## Documentation
+
+Documentation is [HERE](https://att.readthedocs.io/en/latest/).
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -102,5 +104,5 @@ Calls given API resource utilizing `api.API.query()` repeatedly and returns all 
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-r = api.get_all("/czso.cz/lide-domy-byty")
+data, error = api.get_all("/czso.cz/lide-domy-byty")
 ```

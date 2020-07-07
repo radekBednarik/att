@@ -2,7 +2,7 @@
 # pylint: disable=too-many-locals
 
 from time import sleep
-from typing import Any, Dict, Iterable, List, Union
+from typing import Any, Dict, Iterable, List, Tuple, Union
 from urllib.parse import unquote_plus
 
 import requests as r
@@ -105,7 +105,7 @@ class API(r.Session):
             order (str): order output of returned data of api call.
                 e.g `order='"id ASC, nazev DESC"'`. 
 
-            where (str): specifiy filtering of the returned data of api call.
+            where (str): specify filtering of the returned data of api call.
                 e.g. `where='"rok":{"gt":2000}'` or `where='"rok=2000,"barva":"red"'`
 
             limit (int): add limit to set limit for one page of returned data via api call. Defaults to `max_limit`.
@@ -204,10 +204,16 @@ class API(r.Session):
 
         return 1
 
-    def get_all(self, resource: str, order=None, where=None, **kwargs) -> List[Any]:
+    def get_all(
+        self, resource: str, order=None, where=None, **kwargs
+    ) -> Tuple[List[Any], Union[None, ApiError]]:
         """Get all available data from given API <resource>. Utilizes `api.API.query()` method.
         Sends API calls with incremented <skip> parameter, until `ApiResponse.data` array is returned as [].
         Then all fetched data are returned as unordered list (array).
+
+        In case API request fail and all data were not retrieved, method returns `tuple` with
+        unsorted `list` of retrieved data so far, and `apitalker.api.ApiError` class instance of the request
+        error.
 
         Args:
             resource (str): API resource path
@@ -222,7 +228,7 @@ class API(r.Session):
         Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
 
         Returns:
-            List[Any]: unordered list of all data provided by called API resource or `[]` if `api.API.query()` fails.
+            Tuple[List[Any], Union[None, apitalker.api.ApiError]]
         """
 
         keys = list(kwargs.keys())
@@ -231,6 +237,7 @@ class API(r.Session):
         sleep_ = kwargs["sleep"] if "sleep" in keys else None
 
         output: List[Any] = []
+        error: Union[None, ApiError] = None
 
         while True:
             r = self.query(resource, order=order, where=where, limit=limit, skip=skip)
@@ -240,7 +247,12 @@ class API(r.Session):
                 skip += r.count
                 if sleep_ is not None:
                     sleep(sleep_)
+
+            elif isinstance(r, ApiError):
+                error = r
+                break
+
             else:
                 break
 
-        return output
+        return (output, error)
