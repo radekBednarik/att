@@ -11,12 +11,3 @@ apitalker.api module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: apitalker
-   :members:
-   :undoc-members:
-   :show-inheritance:

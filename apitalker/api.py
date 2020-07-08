@@ -10,17 +10,6 @@ import requests as r
 
 class ApiResponse:
     """Class for data response of API resource call.
-
-    Keyword Args:
-        resource (Union[None, str], optional): full resource url.
-        response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
-        data (Union[None, Iterable[Any]], optional): only data from response from api call as list. Defaults to None.
-        skip (Union[None, int], optional): value of skipped pages. Defaults to None.
-        count (Union[None, int], optional): value of count. Defaults to None.
-        limit (Union[None, int], optional): value of limit. Defaults to None.
-        info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
-        provider (Union[None, str], optional): value of data provider. Defaults to None.
-
     """
 
     def __init__(
@@ -34,6 +23,18 @@ class ApiResponse:
         info=None,
         provider=None,
     ) -> None:
+        """Initializes instance of the class.
+
+        Keyword Args:
+            resource (Union[None, str], optional): full resource url.
+            response (Union[None, Dict[str, List[Any]]], optional): complete response from api call as dict. Defaults to None.
+            data (Union[None, Iterable[Any]], optional): only data from response from api call as list. Defaults to None.
+            skip (Union[None, int], optional): value of skipped pages. Defaults to None.
+            count (Union[None, int], optional): value of count. Defaults to None.
+            limit (Union[None, int], optional): value of limit. Defaults to None.
+            info (Union[None, Dict[str, str]], optional): value of info. Defaults to None.
+            provider (Union[None, str], optional): value of data provider. Defaults to None.
+        """
         self.resource: Union[None, str] = resource
         self.response: Union[None, Dict[str, List[Any]]] = response
         self.data: Union[None, Iterable[Any]] = data
@@ -46,15 +47,6 @@ class ApiResponse:
 
 class ApiError:
     """Class for data response error return of API resource call.
-
-        Keyword Args:
-            resource (Union[None, str], optional): full resource url.
-            response (Union[None, Dict[str, Dict[str, Any]]], optional): complete response message as dict. Defaults to None.
-            error (Union[None, Dict[str, Any]], optional): error part of the respone message as dict. Defaults to None.
-            status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
-            name (Union[None, str], optional): name of the error message. Defaults to None.
-            message (Union[None, str], optional): body of the error message. Defaults to None.
-
     """
 
     def __init__(
@@ -66,6 +58,16 @@ class ApiError:
         name=None,
         message=None,
     ) -> None:
+        """Initializes instance of the class.
+
+        Keyword Args:
+            resource (Union[None, str], optional): full resource url.
+            response (Union[None, Dict[str, Dict[str, Any]]], optional): complete response message as dict. Defaults to None.
+            error (Union[None, Dict[str, Any]], optional): error part of the respone message as dict. Defaults to None.
+            status_code (Union[None, int], optional): status code part of the response message. Defaults to None.
+            name (Union[None, str], optional): name of the error message. Defaults to None.
+            message (Union[None, str], optional): body of the error message. Defaults to None.
+        """
         self.resource: Union[None, str] = resource
         self.response: Union[None, Dict[str, Dict[str, Any]]] = response
         self.error: Union[None, Dict[str, Any]] = error
@@ -76,10 +78,6 @@ class ApiError:
 
 class API(r.Session):
     """API class for connection and getting data from Apitalks API resources.
-
-    Args:
-        api_key (str): api key. You need to register to Apitalks (free) to get it
-
     """
 
     base_url = "https://api.apitalks.store"
@@ -88,6 +86,9 @@ class API(r.Session):
 
     def __init__(self, api_key: str) -> None:
         """Initializes the class.
+
+        Args:
+            api_key (str): api key. You need to register to Apitalks (free) to get it
         """
         super().__init__()
         self.api_auth_name = "x-api-key"

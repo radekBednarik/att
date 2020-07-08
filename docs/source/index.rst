@@ -13,7 +13,7 @@ Apitalker is a Python wrapper for Apitalks REST API service.
 **Installation**: ``pip install apitalker``
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
    apitalker
    modules
