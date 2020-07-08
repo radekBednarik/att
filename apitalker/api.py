@@ -7,6 +7,8 @@ from urllib.parse import unquote_plus
 
 import requests as r
 
+from apitalker.data import Data
+
 
 class ApiResponse:
     """Class for data response of API resource call.
@@ -205,12 +207,12 @@ class API(r.Session):
 
         return 1
 
-    def get_all(
+    def get_data(
         self, resource: str, order=None, where=None, **kwargs
-    ) -> Tuple[List[Any], Union[None, ApiError]]:
+    ) -> Tuple[Data, Union[None, ApiError]]:
         """Get all available data from given API <resource>. Utilizes `api.API.query()` method.
         Sends API calls with incremented <skip> parameter, until `ApiResponse.data` array is returned as [].
-        Then all fetched data are returned as unordered list (array).
+        Returns tuple. All fetched data are returned as instance of `apitalker.data.Data` class. Error is either `None` or `apitalker.api.ApiError`.
 
         In case API request fail and all data were not retrieved, method returns `tuple` with
         unsorted `list` of retrieved data so far, and `apitalker.api.ApiError` class instance of the request
@@ -229,7 +231,7 @@ class API(r.Session):
         Method can use same keyword arguments as `api.API.query()`. For details refer to that method.
 
         Returns:
-            Tuple[List[Any], Union[None, apitalker.api.ApiError]]
+            Tuple[apitalker.data.Data, Union[None, apitalker.api.ApiError]]
         """
 
         keys = list(kwargs.keys())
@@ -256,4 +258,6 @@ class API(r.Session):
             else:
                 break
 
-        return (output, error)
+        d = Data(output)
+
+        return (d, error)

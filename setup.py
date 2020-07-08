@@ -7,7 +7,7 @@ setup(
     name="apitalker",
     version="v0.4.1",
     packages=find_packages(),
-    install_requires=["requests"],
+    install_requires=["requests", "pandas"],
     author="Radek 'bednaJedna' Bednarik",
     author_email="bednarik.radek@gmail.com",
     description="Python wrapper for using Apitalks API.",

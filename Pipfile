@@ -9,6 +9,7 @@ black = "*"
 prospector = "*"
 sphinx = "*"
 pytest = "*"
+pandas = "*"
 
 [packages]
 requests = "*"
