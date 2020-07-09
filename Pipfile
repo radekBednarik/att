@@ -11,6 +11,7 @@ sphinx = "*"
 pytest = "*"
 pandas = "*"
 rinohtype = "*"
+pyre-check = "*"
 
 [packages]
 requests = "*"

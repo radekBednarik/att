@@ -1,0 +1,8 @@
+{
+  "binary": "/home/radek/.local/share/virtualenvs/att-5fC-JPbT/bin/pyre.bin",
+  "source_directories": [
+    "./apitalker"
+  ],
+  "taint_models_path": "/home/radek/.local/share/virtualenvs/att-5fC-JPbT/lib/pyre_check/taint/",
+  "typeshed": "/home/radek/.local/share/virtualenvs/att-5fC-JPbT/lib/pyre_check/typeshed/"
+}
