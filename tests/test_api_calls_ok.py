@@ -2,6 +2,8 @@
 
 import pytest
 
+from pandas.core.frame import DataFrame
+
 from apitalker.api import API, ApiResponse
 from apitalker.data import Data
 
@@ -25,20 +27,22 @@ class TestWorkingApiCalls:
 
         assert isinstance(r, ApiResponse) is True
 
-    def test_get_all_no_params(self, valid_resource):
+    def test_get_data_no_params(self, valid_resource):
         data, error = self.api.get_data(valid_resource, sleep=0.1)
 
         assert error is None
         assert isinstance(data, Data) is True
+        assert isinstance(data.as_dataframe, DataFrame) is True
         assert len(data.as_list) > 0
         assert all([isinstance(item, dict) for item in data.as_list]) is True
 
-    def test_get_all_params_set_01(self, valid_resource):
+    def test_get_data_params_set_01(self, valid_resource):
         data, error = self.api.get_data(
             valid_resource, limit=10, skip=30, order='"id ASC"', sleep=0.1,
         )
 
         assert error is None
         assert isinstance(data, Data) is True
+        assert isinstance(data.as_dataframe, DataFrame) is True
         assert len(data.as_list) > 0
         assert all([isinstance(item, dict) for item in data.as_list]) is True

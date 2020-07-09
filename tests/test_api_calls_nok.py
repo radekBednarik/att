@@ -23,7 +23,7 @@ class TestNotWorkingApiCalls:
 
         assert isinstance(r, ApiError) is True
 
-    def test_get_all(self, invalid_resource):
+    def test_get_data(self, invalid_resource):
         data, error = self.api.get_data(invalid_resource)
 
         assert isinstance(error, ApiError) is True
