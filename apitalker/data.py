@@ -34,10 +34,13 @@ class Data:
 
         """
         self.as_list: List[Any] = data
-        self.as_dataframe: DataFrame = self.to_dataframe()
+        self.as_dataframe: DataFrame = self.to_dataframe(data=self.as_list)
 
-    def to_dataframe(self) -> Union[DataFrame, bool]:
+    def to_dataframe(self, data=None) -> Union[DataFrame, bool]:
         """Converts `apitalker.data.Data.as_list` attribute value to DataFrame.
+
+        Keywords Args:
+            data (Union[None, Any]): data to normalize and convert into `pandas.core.frame.DataFrame`
 
         Returns:
             Union[pandas.core.frame.DataFrame, bool]
@@ -46,7 +49,7 @@ class Data:
                 * False: if normalization raises an `Exception`. Can happen, if data have deeply nested and irregular structure.
         """
         try:
-            return _json_normalize(self.as_list)
+            return _json_normalize(data)
         except Exception as e:
             print(f"Exception in 'apitalker.data.Data.to_dataframe()': {str(e)}")
             return False

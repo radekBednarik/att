@@ -23,7 +23,7 @@ copyright = "2020, Radek 'bednaJedna' Bednarik"
 author = "Radek 'bednaJedna' Bednarik"
 
 # The full version, including alpha/beta/rc tags
-release = "0.6.3"
+release = "0.6.4"
 
 
 # -- General configuration ---------------------------------------------------
