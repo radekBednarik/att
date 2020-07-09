@@ -1,6 +1,14 @@
 apitalker package
 =================
 
+Module contents
+---------------
+
+.. automodule:: apitalker
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
 
@@ -19,12 +27,3 @@ apitalker.data module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-.. Module contents
-.. ---------------
-
-.. .. automodule:: apitalker
-..    :members:
-..    :undoc-members:
-..    :show-inheritance:
