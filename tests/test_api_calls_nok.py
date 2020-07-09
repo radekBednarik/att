@@ -1,6 +1,7 @@
 import pytest
 
 from apitalker.api import API, ApiError
+from apitalker.data import Data
 
 # not in repo
 from tests.auth import API_KEY
@@ -23,8 +24,8 @@ class TestNotWorkingApiCalls:
         assert isinstance(r, ApiError) is True
 
     def test_get_all(self, invalid_resource):
-        data, error = self.api.get_all(invalid_resource)
+        data, error = self.api.get_data(invalid_resource)
 
         assert isinstance(error, ApiError) is True
-        assert isinstance(data, list) is True
-        assert len(data) == 0
+        assert isinstance(data, Data) is True
+        assert len(data.as_list) == 0

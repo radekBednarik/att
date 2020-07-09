@@ -9,10 +9,11 @@ black = "*"
 prospector = "*"
 sphinx = "*"
 pytest = "*"
+pandas = "*"
 
 [packages]
 requests = "*"
-rinohtype = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.8"

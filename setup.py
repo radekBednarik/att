@@ -5,9 +5,9 @@ with open("./README.md", mode="r", encoding="utf-8") as f:
 
 setup(
     name="apitalker",
-    version="v0.4.1",
+    version="v0.5.0",
     packages=find_packages(),
-    install_requires=["requests"],
+    install_requires=["requests", "pandas"],
     author="Radek 'bednaJedna' Bednarik",
     author_email="bednarik.radek@gmail.com",
     description="Python wrapper for using Apitalks API.",

@@ -3,6 +3,7 @@
 import pytest
 
 from apitalker.api import API, ApiResponse
+from apitalker.data import Data
 
 # not in repo
 from tests.auth import API_KEY
@@ -25,19 +26,19 @@ class TestWorkingApiCalls:
         assert isinstance(r, ApiResponse) is True
 
     def test_get_all_no_params(self, valid_resource):
-        data, error = self.api.get_all(valid_resource, sleep=0.1)
+        data, error = self.api.get_data(valid_resource, sleep=0.1)
 
         assert error is None
-        assert isinstance(data, list) is True
-        assert len(data) > 0
-        assert all([isinstance(item, dict) for item in data]) is True
+        assert isinstance(data, Data) is True
+        assert len(data.as_list) > 0
+        assert all([isinstance(item, dict) for item in data.as_list]) is True
 
     def test_get_all_params_set_01(self, valid_resource):
-        data, error = self.api.get_all(
+        data, error = self.api.get_data(
             valid_resource, limit=10, skip=30, order='"id ASC"', sleep=0.1,
         )
 
         assert error is None
-        assert isinstance(data, list) is True
-        assert len(data) > 0
-        assert all([isinstance(item, dict) for item in data]) is True
+        assert isinstance(data, Data) is True
+        assert len(data.as_list) > 0
+        assert all([isinstance(item, dict) for item in data.as_list]) is True
