@@ -23,7 +23,7 @@ copyright = "2020, Radek 'bednaJedna' Bednarik"
 author = "Radek 'bednaJedna' Bednarik"
 
 # The full version, including alpha/beta/rc tags
-release = "0.6.2"
+release = "0.6.3"
 
 
 # -- General configuration ---------------------------------------------------
@@ -62,7 +62,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "classic"
+html_theme = "sphinxdoc"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

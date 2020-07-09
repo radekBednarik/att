@@ -117,11 +117,11 @@ class API(r.Session):
             
         Returns:
             (Union[ApiResponse, ApiError, int])
-                ApiResponse: class instance with attributes of successfull API call
+                * ApiResponse: class instance with attributes of successfull API call
 
-                ApiError: class instance with attributes of unsuccessfull API call
+                * ApiError: class instance with attributes of unsuccessfull API call
                 
-                int: 1, if some other bad stuff happened
+                * int: 1, if some other bad stuff happened
 
         """
         resource = f"{self.base_url}{resource}"
