@@ -10,6 +10,7 @@ prospector = "*"
 sphinx = "*"
 pytest = "*"
 pandas = "*"
+rinohtype = "*"
 
 [packages]
 requests = "*"
