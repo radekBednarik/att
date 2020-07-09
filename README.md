@@ -116,6 +116,8 @@ data, error = api.get_data("/czso.cz/lide-domy-byty")
 
 ##### apitalker.api.data.Data
 
+**Get all data from given resource**
+
 ```
 from pprint import PrettyPrinter
 from apitalker.api import API
@@ -130,6 +132,28 @@ data, error = api.get_data(
 if error is None:
     printer.pprint(data.as_list)
     print(data.as_dataframe.head)
+
+else:
+    printer.pprint(error.response)
+```
+
+**Save data in various file formats**
+
+```
+from pprint import PrettyPrinter
+from apitalker.api import API
+
+printer = PrettyPrinter(indent=2)
+api = API("yourAPIkeygoeshere")
+
+data, error = api.get_data(
+    "/czso.cz/lide-domy-byty", where='"typuz_naz":"okres"', sleep=0.1
+)
+
+if error is None:
+    printer.pprint(data.as_list)
+    print(data.as_dataframe.head)
+    data.to_json(filepath, indent=2, force_ascii=False)
 
 else:
     printer.pprint(error.response)
