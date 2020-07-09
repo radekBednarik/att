@@ -3,7 +3,6 @@
 ![Upload Python Package](https://github.com/bednaJedna/att/workflows/Upload%20Python%20Package/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/att/badge/?version=latest)](https://att.readthedocs.io/en/latest/?badge=latest)
 
-
 ## Table of Contents
 
 - [About](#about)
@@ -47,7 +46,7 @@ api = API("yourAPIkeygoeshere")
 r = api.query([resource], [...params])
 ```
 
-Returned data are treated as instance of a class `ApiResponse`. 
+Returned data are treated as instance of a class `ApiResponse`.
 
 Error messages in case there are some problems with api call, are handled by class `ApiError`.
 
@@ -140,10 +139,9 @@ else:
 **Save data in various file formats**
 
 ```
-from pprint import PrettyPrinter
 from apitalker.api import API
 
-printer = PrettyPrinter(indent=2)
+
 api = API("yourAPIkeygoeshere")
 
 data, error = api.get_data(
@@ -151,9 +149,8 @@ data, error = api.get_data(
 )
 
 if error is None:
-    printer.pprint(data.as_list)
-    print(data.as_dataframe.head)
-    data.to_json(filepath, indent=2, force_ascii=False)
+    data.as_dataframe.to_json("filepath")
+    data.as_dataframe.to_csv("filepath)
 
 else:
     printer.pprint(error.response)
