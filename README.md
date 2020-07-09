@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [About](#about)
+- [Documentation](#documentation)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
   - [Examples](#examples)
@@ -15,7 +16,9 @@
 
 Python3 library. Wrapper for [Apitalks API](https://www.api.store/) calls. Enables simple calls for api resources with optional use of available parameters, as specified in [Apitalks documentation](https://www.api.store/czso.cz/dokumentace#section/Query-parametry).
 
-## Documentation
+Returned data (when method `apitalker.api.API.get_data()` is used) are handled by `apitalker.data.Data` class, which provides some convenient methods for working with data.
+
+## Documentation <a name= "documentation"></a>
 
 Documentation is [HERE](https://att.readthedocs.io/en/latest/).
 
@@ -50,7 +53,9 @@ Error messages in case there are some problems with api call, are handled by cla
 
 ### Examples <a name = "examples"></a>
 
-#### api.API.query()
+#### apitalker.api module
+
+##### apitalker.api.API.query()
 
 Calls given API resource and returns one "page" of the data.
 
@@ -96,7 +101,7 @@ api = API("yourAPIkeygoeshere")
 r = api.query("/czso.cz/lide-domy-byty", where='"uzkod":568741, "year":1999')
 ```
 
-#### api.API.get_all()
+##### apitalker.api.API.get_data()
 
 Calls given API resource utilizing `api.API.query()` repeatedly and returns all data of given resource.
 
@@ -104,5 +109,28 @@ Calls given API resource utilizing `api.API.query()` repeatedly and returns all 
 from apitalker.api import API
 
 api = API("yourAPIkeygoeshere")
-data, error = api.get_all("/czso.cz/lide-domy-byty")
+data, error = api.get_data("/czso.cz/lide-domy-byty")
+```
+
+#### apitalker.data module
+
+##### apitalker.api.data.Data
+
+```
+from pprint import PrettyPrinter
+from apitalker.api import API
+
+printer = PrettyPrinter(indent=2)
+api = API("yourAPIkeygoeshere")
+
+data, error = api.get_data(
+    "/czso.cz/lide-domy-byty", where='"typuz_naz":"okres"', sleep=0.1
+)
+
+if error is None:
+    printer.pprint(data.as_list)
+    print(data.as_dataframe.head)
+
+else:
+    printer.pprint(error.response)
 ```
