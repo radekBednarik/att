@@ -191,3 +191,20 @@ class PraguePublicTransportation:
         pass
 
 
+class CzechNationalBank:
+    """Class for mapping API resources of Czech National Bank provided by Apitalks.
+
+    References:
+        https://www.api.store/cnb.cz/ (in czech language)
+    """
+
+    banky_a_zahranicni_pobocky = "/cnb.cz/banky"
+    smenarny = "/cnb.cz/smenarny"
+    nebankovni_poskytovatele_spotr_uveru = "/cnb.cz/npsu"
+    samostatni_poskytovatele_spotr_uveru = "/cnb.cz/szsu"
+    vazani_zastupci = "/cnb.cz/vzsu"
+    zprostredkovatele_vazaneho_spotr_uveru = "/cnb.cz/zvsu"
+    zahr_zprostredkovatele_spotr_uveru = "/cnb.cz/zzsu"
+
+    def __init__(self) -> None:
+        pass
