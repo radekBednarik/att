@@ -37,9 +37,9 @@ class Data:
         self.as_dataframe: DataFrame = self.to_dataframe(data=self.as_list)
 
     def to_dataframe(self, data=None) -> Union[DataFrame, bool]:
-        """Converts `apitalker.data.Data.as_list` attribute value to DataFrame.
+        """Converts `data` to DataFrame.
 
-        Keywords Args:
+        Keyword Args:
             data (Union[None, Any]): data to normalize and convert into `pandas.core.frame.DataFrame`
 
         Returns:
