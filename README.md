@@ -113,7 +113,7 @@ data, error = api.get_data("/czso.cz/lide-domy-byty")
 
 #### apitalker.data module
 
-##### apitalker.api.data.Data
+##### apitalker.data.Data
 
 **Get all data from given resource**
 
@@ -154,4 +154,24 @@ if error is None:
 
 else:
     printer.pprint(error.response)
+```
+
+#### apitalker.resources module
+
+This module provides convenient mappings of currently existing API resources provided by Apitalks.
+
+Resources are mapped using classes, to be able to use `.` notation (and IntelliSense of IDE of your choice.)
+
+**All resources were NOT tested to be functional**. They were just taken from the documentation.
+
+```
+from apitalker.api import API
+from apitalker.resources import Czso
+
+api = API("yourapikey")
+
+data, error = api.get_data(Czso.ciselniky_kraj)
+
+if error is None:
+    print(data.as_dataframe.head)
 ```
