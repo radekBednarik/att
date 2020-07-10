@@ -277,3 +277,17 @@ class AdminOfLandSurveyingAndCadastre:
 
     def __init__(self) -> None:
         pass
+
+
+class EET:
+    """Class for mapping API resources of Electronic Evidence of Revenue (EET) provided by Apitalks.
+
+    References:
+        https://www.api.store/fs.mfcr.cz/ (in czech language)
+    """
+
+    eet = "/fs.mfcr.cz/eet"
+    ciselnik_cinnosti_provozoven = "/fs.mfcr.cz/ciselnik"
+
+    def __init__(self) -> None:
+        pass
