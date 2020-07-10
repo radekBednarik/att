@@ -137,3 +137,16 @@ class Jobs:
 
     def __init__(self) -> None:
         pass
+
+
+class EmployersInInsolvency:
+    """Class for mapping API resources of Employers in Service sector of the economy provided by Apitalks.
+
+    References:
+        https://www.api.store/sif/ (in czech language)
+    """
+
+    zamestnavatele_v_insolvenci = "/sif"
+
+    def __init__(self) -> None:
+        pass
