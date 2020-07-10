@@ -111,3 +111,18 @@ class CzechBusinessInspection:
 
     def __init__(self) -> None:
         pass
+
+
+class Schools:
+    """Class for mapping API resources of schools provided by Apitalks.
+
+    References:
+        https://www.api.store/skoly/ (in czech language)
+    """
+
+    skoly = "/skoly"
+
+    def __init__(self) -> None:
+        pass
+
+
