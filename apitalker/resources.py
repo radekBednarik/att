@@ -208,3 +208,52 @@ class CzechNationalBank:
 
     def __init__(self) -> None:
         pass
+
+
+class SUKL:
+    """Class for mapping API resources of State Institue for Drug Control (SUKL) provided by Apitalks.
+
+    References:
+        https://www.api.store/sukl.cz/ (in czech language)
+    """
+
+    atc_skupina_lp = "/sukl.cz/dlp-atc"
+    cesta_podani_lp = "/sukl.cz/dlp-cesty"
+    doping = "/sukl.cz/dlp-doping"
+    lekova_forma_lp = "/sukl.cz/dlp-formy"
+    indikacni_skupina_lp = "/sukl.cz/dlp-indikacniskupiny"
+    jednotka_mnozstvi_latky = "/sukl.cz/dlp-jednotky"
+    nazev_latky = "/sukl.cz/dlp-latky"
+    nazev_lecive_latky = "/sukl.cz/dlp-lecivelatky"
+    lecive_pripravky_lp = "/sukl.cz/dlp-lecivepripravky"
+    leky_s_anabolickym_ci_jinym_hormonalnim_ucinkem = "/sukl.cz/dlp-narvla"
+    dokumenty_navazane_k_lp = "/sukl.cz/dlp-nazvydokumentu"
+    nazev_obalu_lp = "/sukl.cz/dlp-obaly"
+    zkratka_drzitel_registrace_vyrobce = "/sukl.cz/dlp-organizace"
+    registracni_procedura_lp = "/sukl.cz/dlp-regproc"
+    slozeni_lp = "/sukl.cz/dlp-slozeni"
+    kod_soli_v_latce = "/sukl.cz/dlp-soli"
+    lecebny_program_mzcr = "/sukl.cz/dlp-splp"
+    stav_registrace_lp = "/sukl.cz/dlp-stavyreg"
+    synonyma_latky_lp = "/sukl.cz/dlp-synonyma"
+    priznak_slozeni_lp = "/sukl.cz/dlp-slozenipriznak"
+    informace_o_drziteli_prav_lp = "/sukl.cz/dlp-vpois"
+    typ_vydeje_lp = "/sukl.cz/dlp-vydej"
+    nazev_vyrobce_lp = "/sukl.cz/dlp-vyrobci"
+    kategorie_zavislosti_ll = "/sukl.cz/dlp-zavislost"
+    nazev_zdroje_lp = "/sukl.cz/dlp-zdroje"
+    zeme_vyroby_lp = "/sukl.cz/dlp-zeme"
+    dodavky_atc_2016 = "/sukl.cz/dodavky-atc-2016"
+    dodavky_atc_2017 = "/sukl.cz/dodavky-atc-2017"
+    dodavky_lp_1991_2000 = "/sukl.cz/dodavky-lp-1991-2000"
+    dodavky_lp_2001_2010 = "/sukl.cz/dodavky-lp-2001-2010"
+    dodavky_atc_2011_2015 = "/sukl.cz/dodavky-lp-2011-2015"
+    dodavky_lp_2018 = "/sukl.cz/dodavky-lp-2018"
+    ochranne_prvky_ano = "/sukl.cz/ochranne-prvky-ano"
+    ochranne_prvky_ne = "/sukl.cz/ochranne-prvky-ne"
+    lekarny_seznam = "/sukl.cz/lekarny-seznam"
+    lekarny_pracovni_doba = "/sukl.cz/lekarny-prac-doba"
+    lekarny_typ = "/sukl.cz/lekarny-typ"
+
+    def __init__(self) -> None:
+        pass
