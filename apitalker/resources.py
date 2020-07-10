@@ -176,3 +176,18 @@ class PublicAuthorities:
 
     def __init__(self) -> None:
         pass
+
+
+class PraguePublicTransportation:
+    """Class for mapping API resources of Prague public transportation provided by Apitalks.
+
+    References:
+        https://www.api.store/prazska-integrovana-doprava/ (in czech language)
+    """
+
+    zastavky = "/pid/zastavky"
+
+    def __init__(self) -> None:
+        pass
+
+
