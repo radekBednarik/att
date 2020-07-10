@@ -34,3 +34,37 @@ class CzsoAll:
 
     def __init__(self) -> None:
         pass
+
+
+class CzechPost:
+    """Class for mapping API resources of Czech Post Office, provided by Apitalks.
+
+    References:
+        https://www.api.store/ceskaposta.cz/dokumentace (in czech language)
+    """
+
+    provozovny = "/cpost.cz/provozovny"
+    posty_info = "/cpost.cz/posty"
+    postovni_schranky = "/cpost.cz/postovni-schranky"
+    psc = "/cpost.cz/psc"
+    mista_bez_dorucovani = "/cpost.cz/bez-dorucovani"
+    psc_s_dorucovacim_pasmem = "/cpost.cz/psc-s-dorucovacim-pasmem"
+    psc_adresni = "/cpost.cz/adresni-psc"
+    obce_s_adresni_psc = "/cpost.cz/obce-adresni-psc"
+    provozovny_s_baliky = "/cpost.cz/provozovny-balik"
+    provozovny_s_baliky_nad_30kg = "/cpost.cz/provozovny-balik-30kg"
+    mista_zkracene_dodani = "/cpost.cz/mista-zkracene-dodani"
+    mista_zkracene_dodani_svatky = "/cpost.cz/mista-zkracene-dodani-svatky"
+    mista_prevzeti_u_odesilatele = "/cpost.cz/mista-prevezeti-u-odesilatele"
+    provozovny_podat_balik_na_postu = "/cpost.cz/podani-baliku-na-postu"
+    provozovny_ulozit_balik_na_postu = "/cpost.cz/adresovani-baliku-na-postu"
+    balikovny = "/cpost.cz/balikovny"
+    adresovani_balik_expres = "/cpost.cz/adresovani-baliku-expres"
+    podani_balik_expres = "/cpost.cz/podani-baliku-expres"
+    podani_balik_nadrozmer = "/cpost.cz/podani-baliku-nadrozmer"
+    ulozit_balik_nadrozmer = "/cpost.cz/ulozeni-baliku-nadrozmer"
+    roznasky_propagacnich_materialu_pocty = "/cpost.cz/pocty-RIPM"
+    roznasky_propagacnich_materialu_posty = "/cpost.cz/objednavka-RIPM"
+
+    def __init__(self) -> None:
+        pass
