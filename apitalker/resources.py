@@ -163,3 +163,16 @@ class EuropeanParliament:
 
     def __init__(self) -> None:
         pass
+
+
+class PublicAuthorities:
+    """Class for mapping API resources of public authorities provided by Apitalks.
+
+    References:
+        https://www.api.store/organy-verejne-moci/ (in czech language)
+    """
+
+    organy_verejne_moci = "/ovm"
+
+    def __init__(self) -> None:
+        pass
