@@ -126,3 +126,14 @@ class Schools:
         pass
 
 
+class Jobs:
+    """Class for mapping API resources of available jobs provided by Apitalks.
+
+    References:
+        https://www.api.store/volna-pracovni-mista/ (in czech language)
+    """
+
+    volna_pracovni_mista = "/volna-pracovni-mista"
+
+    def __init__(self) -> None:
+        pass
