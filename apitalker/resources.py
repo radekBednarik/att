@@ -81,3 +81,17 @@ class DataBoxes:
 
     def __init__(self) -> None:
         pass
+
+
+class HealthServices:
+    """Class for mapping API resources of Health Service (Zdravotni sluzby), provided by Apitalks.
+
+    References:
+        https://www.api.store/zdravotni-sluzby/ (in czech language)
+    """
+
+    zdravotni_sluzby = "/zdravotni-sluzby"
+
+    def __init__(self) -> None:
+        pass
+
