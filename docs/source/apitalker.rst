@@ -20,6 +20,14 @@ apitalker.data module
    :undoc-members:
    :show-inheritance:
 
+apitalker.resources module
+--------------------------
+
+.. automodule:: apitalker.resources
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
