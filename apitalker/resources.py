@@ -257,3 +257,23 @@ class SUKL:
 
     def __init__(self) -> None:
         pass
+
+
+class AdminOfLandSurveyingAndCadastre:
+    """Class for mapping API resources of State Administration of Land Surveying and Cadastre (CUZSK) provided by Apitalks.
+
+    References:
+        https://www.api.store/cuzk.cz/ (in czech language)
+    """
+
+    adresni_mista = "/cuzk.cz/adresni-mista-cr"
+    adresni_mista_vazby_na_skladebnost = "/cuzk.cz/adresni-mista-vazby-cr"
+    vazby_v_cr = "/cuzk.cz/vazby-cr"
+    vazby_praha = "/cuzk.cz/vazby-hlm-praha"
+    vazby_katastru_na_obce = "/cuzk.cz/vazby-katastr-uzemi-cr"
+    vazby_uzemnich_prvku_na_statut_mesta = "/cuzk.cz/vazby-momc-statutarni-mesta"
+    vazby_na_puvodni_cleneni_okresu = "/cuzk.cz/vazby-okresy-cr"
+    vazby_ulice_obce = "/cuzk.cz/vazby-ulice-obce-s-ulicni-siti"
+
+    def __init__(self) -> None:
+        pass
