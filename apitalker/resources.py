@@ -150,3 +150,16 @@ class EmployersInInsolvency:
 
     def __init__(self) -> None:
         pass
+
+
+class EuropeanParliament:
+    """Class for mapping API resources of European Parliament provided by Apitalks.
+
+    References:
+        https://www.api.store/evropsky-parlament/ (in czech language)
+    """
+
+    clenove = "/meps"
+
+    def __init__(self) -> None:
+        pass
