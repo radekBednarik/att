@@ -1,0 +1,1106 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apitalker package &#8212; Apitalker 1.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apitalker" href="modules.html" />
+    <link rel="prev" title="Welcome to Apitalker’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="apitalker"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Apitalker’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Apitalker 1.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apitalker package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="apitalker-package">
+<h1>apitalker package<a class="headerlink" href="#apitalker-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-apitalker.api">
+<span id="apitalker-api-module"></span><h2>apitalker.api module<a class="headerlink" href="#module-apitalker.api" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apitalker.api.API">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">API</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_key</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.sessions.Session</span></code></p>
+<p>API class for connection and getting data from Apitalks API resources.</p>
+<dl class="py method">
+<dt id="apitalker.api.API.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_key</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#apitalker.api.API.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>api_key</strong> (<em>str</em>) – api key. You need to register to Apitalks (free) to get it</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.api.API.base_url">
+<code class="sig-name descname">base_url</code><em class="property"> = 'https://api.apitalks.store'</em><a class="headerlink" href="#apitalker.api.API.base_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.api.API.default_skip">
+<code class="sig-name descname">default_skip</code><em class="property"> = 0</em><a class="headerlink" href="#apitalker.api.API.default_skip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apitalker.api.API.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">order</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">where</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Tuple[apitalker.data.Data, Union[None, apitalker.api.ApiError]]<a class="headerlink" href="#apitalker.api.API.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all available data from given API &lt;resource&gt;. Utilizes <cite>api.API.query()</cite> method.
+Sends API calls with incremented &lt;skip&gt; parameter, until <cite>ApiResponse.data</cite> array is returned as [].
+Returns tuple. All fetched data are returned as instance of <cite>apitalker.data.Data</cite> class. Error is either <cite>None</cite> or <cite>apitalker.api.ApiError</cite>.</p>
+<p>In case API request fail and all data were not retrieved, method returns <cite>tuple</cite> with
+unsorted <cite>list</cite> of retrieved data so far, and <cite>apitalker.api.ApiError</cite> class instance of the request
+error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>resource</strong> (<em>str</em>) – API resource path</p>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>order</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – order the returned data of !individual! API call. Defaults to None.</p></li>
+<li><p><strong>where</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – filter the returned data. Defaults to None.</p></li>
+<li><p><strong>sleep</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – set in seconds, how long should method wait between each api call. Defaults to None.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – add limit to set limit for one page of returned data via api call. Defaults to <cite>max_limit</cite>.</p></li>
+<li><p><strong>skip</strong> (<em>int</em>) – add skip to set number of skipped data entries via api call. Defaults to <cite>default_skip</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Method can use same keyword arguments as <cite>api.API.query()</cite>. For details refer to that method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Tuple[apitalker.data.Data, Union[None, apitalker.api.ApiError]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.api.API.max_limit">
+<code class="sig-name descname">max_limit</code><em class="property"> = 30</em><a class="headerlink" href="#apitalker.api.API.max_limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apitalker.api.API.query">
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">order</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">where</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span><a class="reference internal" href="#apitalker.api.ApiResponse" title="apitalker.api.ApiResponse">apitalker.api.ApiResponse</a><span class="p">, </span><a class="reference internal" href="#apitalker.api.ApiError" title="apitalker.api.ApiError">apitalker.api.ApiError</a><span class="p">, </span>int<span class="p">]</span><a class="headerlink" href="#apitalker.api.API.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries API for data from &lt;resource&gt;. See <a class="reference external" href="https://www.api.store/czso.cz/dokumentace#section/Query-parametry">https://www.api.store/czso.cz/dokumentace#section/Query-parametry</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>resource</strong> (<em>str</em>) – API resource path as specified in Apitalks documentation</p>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>order</strong> (<em>str</em>) – order output of returned data of api call.
+e.g <cite>order=‘“id ASC, nazev DESC”’</cite>.</p></li>
+<li><p><strong>where</strong> (<em>str</em>) – specify filtering of the returned data of api call.
+e.g. <cite>where=‘“rok”:{“gt”:2000}’</cite> or <cite>where=‘“rok=2000,”barva”:”red”’</cite></p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – add limit to set limit for one page of returned data via api call. Defaults to <cite>max_limit</cite>.</p></li>
+<li><p><strong>skip</strong> (<em>int</em>) – add skip to set number of skipped data entries via api call. Defaults to <cite>default_skip</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>(Union[ApiResponse, ApiError, int])</dt><dd><ul class="simple">
+<li><p>ApiResponse: class instance with attributes of successfull API call</p></li>
+<li><p>ApiError: class instance with attributes of unsuccessfull API call</p></li>
+<li><p>int: 1, if some other bad stuff happened</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.api.ApiError">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">ApiError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">error</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">status_code</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.ApiError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for data response error return of API resource call.</p>
+<dl class="py method">
+<dt id="apitalker.api.ApiError.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">error</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">status_code</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#apitalker.api.ApiError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes instance of the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – full resource url.</p></li>
+<li><p><strong>response</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – complete response message as dict. Defaults to None.</p></li>
+<li><p><strong>error</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – error part of the respone message as dict. Defaults to None.</p></li>
+<li><p><strong>status_code</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – status code part of the response message. Defaults to None.</p></li>
+<li><p><strong>name</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – name of the error message. Defaults to None.</p></li>
+<li><p><strong>message</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – body of the error message. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.api.ApiResponse">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.api.</code><code class="sig-name descname">ApiResponse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">skip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">limit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">info</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">provider</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.api.ApiResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for data response of API resource call.</p>
+<dl class="py method">
+<dt id="apitalker.api.ApiResponse.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">response</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">skip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">limit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">info</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">provider</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#apitalker.api.ApiResponse.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes instance of the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – full resource url.</p></li>
+<li><p><strong>response</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>Any</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – complete response from api call as dict. Defaults to None.</p></li>
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Iterable</em><em>[</em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – only data from response from api call as list. Defaults to None.</p></li>
+<li><p><strong>skip</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – value of skipped pages. Defaults to None.</p></li>
+<li><p><strong>count</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – value of count. Defaults to None.</p></li>
+<li><p><strong>limit</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – value of limit. Defaults to None.</p></li>
+<li><p><strong>info</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – value of info. Defaults to None.</p></li>
+<li><p><strong>provider</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – value of data provider. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apitalker.data">
+<span id="apitalker-data-module"></span><h2>apitalker.data module<a class="headerlink" href="#module-apitalker.data" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apitalker.data.Data">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.data.</code><code class="sig-name descname">Data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apitalker.data.Data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for handling data returned by using <cite>apitalker.api.API.get_data()</cite> method.</p>
+<dl class="py method">
+<dt id="apitalker.data.Data.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Any<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#apitalker.data.Data.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes instance of the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>List</em><em>[</em><em>Any</em><em>]</em>) – data retrieved from Apitalks API data resource.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="apitalker.data.Data.as_list">
+<code class="sig-name descname">as_list</code><a class="headerlink" href="#apitalker.data.Data.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>original data retrieved from Api resource</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.data.Data.as_dataframe">
+<code class="sig-name descname">as_dataframe</code><a class="headerlink" href="#apitalker.data.Data.as_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>data as pandas DataFrame object, converted using <cite>pandas._json_normalize()</cite>.
+You can then use various methods, which <cite>pandas.DataFrame</cite> class provides, e.g. for saving data
+in various file types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pandas.Dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">apitalker.api</span> <span class="kn">import</span> <span class="n">API</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="s2">&quot;yourapikey&quot;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;/path/to/resource/&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">data</span><span class="o">.</span><span class="n">as_dataframe</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">data</span><span class="o">.</span><span class="n">as_dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="apitalker.data.Data.to_dataframe">
+<code class="sig-name descname">to_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>bool<span class="p">]</span><a class="headerlink" href="#apitalker.data.Data.to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts <cite>data</cite> to DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Any</em><em>]</em>) – data to normalize and convert into <cite>pandas.core.frame.DataFrame</cite></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Union[pandas.core.frame.DataFrame, bool]</dt><dd><ul class="simple">
+<li><p>pandas.core.frame.DataFrame: converted API data to pandas DataFrame, if normalization of data was successful.</p></li>
+<li><p>False: if normalization raises an <cite>Exception</cite>. Can happen, if data have deeply nested and irregular structure.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apitalker.resources">
+<span id="apitalker-resources-module"></span><h2>apitalker.resources module<a class="headerlink" href="#module-apitalker.resources" title="Permalink to this headline">¶</a></h2>
+<p>This module provides convenient mappings of currently existing API resources provided by Apitalks.</p>
+<p>Resources are mapped using classes, to be able to use <cite>.</cite> [dot] notation (and IntelliSense of IDE of your choice.)</p>
+<p><strong>All resources were NOT tested to be functional</strong>. They were just taken from the documentation.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">apitalker.api</span> <span class="kn">import</span> <span class="n">API</span>
+<span class="kn">from</span> <span class="nn">apitalker.resources</span> <span class="kn">import</span> <span class="n">Czso</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="s2">&quot;yourapikey&quot;</span><span class="p">)</span>
+
+<span class="n">data</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">Czso</span><span class="o">.</span><span class="n">ciselniky_kraj</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">as_dataframe</span><span class="o">.</span><span class="n">head</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">AdminOfLandSurveyingAndCadastre</code><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of State Administration of Land Surveying and Cadastre (CUZSK) provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/cuzk.cz/">https://www.api.store/cuzk.cz/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.adresni_mista">
+<code class="sig-name descname">adresni_mista</code><em class="property"> = '/cuzk.cz/adresni-mista-cr'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.adresni_mista" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.adresni_mista_vazby_na_skladebnost">
+<code class="sig-name descname">adresni_mista_vazby_na_skladebnost</code><em class="property"> = '/cuzk.cz/adresni-mista-vazby-cr'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.adresni_mista_vazby_na_skladebnost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_katastru_na_obce">
+<code class="sig-name descname">vazby_katastru_na_obce</code><em class="property"> = '/cuzk.cz/vazby-katastr-uzemi-cr'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_katastru_na_obce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_na_puvodni_cleneni_okresu">
+<code class="sig-name descname">vazby_na_puvodni_cleneni_okresu</code><em class="property"> = '/cuzk.cz/vazby-okresy-cr'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_na_puvodni_cleneni_okresu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_praha">
+<code class="sig-name descname">vazby_praha</code><em class="property"> = '/cuzk.cz/vazby-hlm-praha'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_praha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_ulice_obce">
+<code class="sig-name descname">vazby_ulice_obce</code><em class="property"> = '/cuzk.cz/vazby-ulice-obce-s-ulicni-siti'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_ulice_obce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_uzemnich_prvku_na_statut_mesta">
+<code class="sig-name descname">vazby_uzemnich_prvku_na_statut_mesta</code><em class="property"> = '/cuzk.cz/vazby-momc-statutarni-mesta'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_uzemnich_prvku_na_statut_mesta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_v_cr">
+<code class="sig-name descname">vazby_v_cr</code><em class="property"> = '/cuzk.cz/vazby-cr'</em><a class="headerlink" href="#apitalker.resources.AdminOfLandSurveyingAndCadastre.vazby_v_cr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.AuthoritiesJurisdiction">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">AuthoritiesJurisdiction</code><a class="headerlink" href="#apitalker.resources.AuthoritiesJurisdiction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of authorities territory jurisdiction provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/spadovost/">https://www.api.store/spadovost/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.AuthoritiesJurisdiction.spadovost">
+<code class="sig-name descname">spadovost</code><em class="property"> = '/spadovost'</em><a class="headerlink" href="#apitalker.resources.AuthoritiesJurisdiction.spadovost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.CzechBusinessInspection">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">CzechBusinessInspection</code><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Czech Business Inspection (Ceska obchodni inspekce), provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/coi/">https://www.api.store/coi/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechBusinessInspection.rizikove_weby">
+<code class="sig-name descname">rizikove_weby</code><em class="property"> = '/coi/rizikove-weby'</em><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection.rizikove_weby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechBusinessInspection.sankce">
+<code class="sig-name descname">sankce</code><em class="property"> = '/coi/sankce'</em><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection.sankce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechBusinessInspection.zajisteni">
+<code class="sig-name descname">zajisteni</code><em class="property"> = '/coi/zajisteni'</em><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection.zajisteni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechBusinessInspection.zakazy">
+<code class="sig-name descname">zakazy</code><em class="property"> = '/coi/zakazy'</em><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection.zakazy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechBusinessInspection.zamereni">
+<code class="sig-name descname">zamereni</code><em class="property"> = '/coi/zamereni'</em><a class="headerlink" href="#apitalker.resources.CzechBusinessInspection.zamereni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.CzechNationalBank">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">CzechNationalBank</code><a class="headerlink" href="#apitalker.resources.CzechNationalBank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Czech National Bank provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/cnb.cz/">https://www.api.store/cnb.cz/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.banky_a_zahranicni_pobocky">
+<code class="sig-name descname">banky_a_zahranicni_pobocky</code><em class="property"> = '/cnb.cz/banky'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.banky_a_zahranicni_pobocky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.nebankovni_poskytovatele_spotr_uveru">
+<code class="sig-name descname">nebankovni_poskytovatele_spotr_uveru</code><em class="property"> = '/cnb.cz/npsu'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.nebankovni_poskytovatele_spotr_uveru" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.samostatni_poskytovatele_spotr_uveru">
+<code class="sig-name descname">samostatni_poskytovatele_spotr_uveru</code><em class="property"> = '/cnb.cz/szsu'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.samostatni_poskytovatele_spotr_uveru" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.smenarny">
+<code class="sig-name descname">smenarny</code><em class="property"> = '/cnb.cz/smenarny'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.smenarny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.vazani_zastupci">
+<code class="sig-name descname">vazani_zastupci</code><em class="property"> = '/cnb.cz/vzsu'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.vazani_zastupci" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.zahr_zprostredkovatele_spotr_uveru">
+<code class="sig-name descname">zahr_zprostredkovatele_spotr_uveru</code><em class="property"> = '/cnb.cz/zzsu'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.zahr_zprostredkovatele_spotr_uveru" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechNationalBank.zprostredkovatele_vazaneho_spotr_uveru">
+<code class="sig-name descname">zprostredkovatele_vazaneho_spotr_uveru</code><em class="property"> = '/cnb.cz/zvsu'</em><a class="headerlink" href="#apitalker.resources.CzechNationalBank.zprostredkovatele_vazaneho_spotr_uveru" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.CzechPost">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">CzechPost</code><a class="headerlink" href="#apitalker.resources.CzechPost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Czech Post Office, provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/ceskaposta.cz/dokumentace">https://www.api.store/ceskaposta.cz/dokumentace</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.adresovani_balik_expres">
+<code class="sig-name descname">adresovani_balik_expres</code><em class="property"> = '/cpost.cz/adresovani-baliku-expres'</em><a class="headerlink" href="#apitalker.resources.CzechPost.adresovani_balik_expres" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.balikovny">
+<code class="sig-name descname">balikovny</code><em class="property"> = '/cpost.cz/balikovny'</em><a class="headerlink" href="#apitalker.resources.CzechPost.balikovny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.mista_bez_dorucovani">
+<code class="sig-name descname">mista_bez_dorucovani</code><em class="property"> = '/cpost.cz/bez-dorucovani'</em><a class="headerlink" href="#apitalker.resources.CzechPost.mista_bez_dorucovani" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.mista_prevzeti_u_odesilatele">
+<code class="sig-name descname">mista_prevzeti_u_odesilatele</code><em class="property"> = '/cpost.cz/mista-prevezeti-u-odesilatele'</em><a class="headerlink" href="#apitalker.resources.CzechPost.mista_prevzeti_u_odesilatele" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.mista_zkracene_dodani">
+<code class="sig-name descname">mista_zkracene_dodani</code><em class="property"> = '/cpost.cz/mista-zkracene-dodani'</em><a class="headerlink" href="#apitalker.resources.CzechPost.mista_zkracene_dodani" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.mista_zkracene_dodani_svatky">
+<code class="sig-name descname">mista_zkracene_dodani_svatky</code><em class="property"> = '/cpost.cz/mista-zkracene-dodani-svatky'</em><a class="headerlink" href="#apitalker.resources.CzechPost.mista_zkracene_dodani_svatky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.obce_s_adresni_psc">
+<code class="sig-name descname">obce_s_adresni_psc</code><em class="property"> = '/cpost.cz/obce-adresni-psc'</em><a class="headerlink" href="#apitalker.resources.CzechPost.obce_s_adresni_psc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.podani_balik_expres">
+<code class="sig-name descname">podani_balik_expres</code><em class="property"> = '/cpost.cz/podani-baliku-expres'</em><a class="headerlink" href="#apitalker.resources.CzechPost.podani_balik_expres" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.podani_balik_nadrozmer">
+<code class="sig-name descname">podani_balik_nadrozmer</code><em class="property"> = '/cpost.cz/podani-baliku-nadrozmer'</em><a class="headerlink" href="#apitalker.resources.CzechPost.podani_balik_nadrozmer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.postovni_schranky">
+<code class="sig-name descname">postovni_schranky</code><em class="property"> = '/cpost.cz/postovni-schranky'</em><a class="headerlink" href="#apitalker.resources.CzechPost.postovni_schranky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.posty_info">
+<code class="sig-name descname">posty_info</code><em class="property"> = '/cpost.cz/posty'</em><a class="headerlink" href="#apitalker.resources.CzechPost.posty_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.provozovny">
+<code class="sig-name descname">provozovny</code><em class="property"> = '/cpost.cz/provozovny'</em><a class="headerlink" href="#apitalker.resources.CzechPost.provozovny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.provozovny_podat_balik_na_postu">
+<code class="sig-name descname">provozovny_podat_balik_na_postu</code><em class="property"> = '/cpost.cz/podani-baliku-na-postu'</em><a class="headerlink" href="#apitalker.resources.CzechPost.provozovny_podat_balik_na_postu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.provozovny_s_baliky">
+<code class="sig-name descname">provozovny_s_baliky</code><em class="property"> = '/cpost.cz/provozovny-balik'</em><a class="headerlink" href="#apitalker.resources.CzechPost.provozovny_s_baliky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.provozovny_s_baliky_nad_30kg">
+<code class="sig-name descname">provozovny_s_baliky_nad_30kg</code><em class="property"> = '/cpost.cz/provozovny-balik-30kg'</em><a class="headerlink" href="#apitalker.resources.CzechPost.provozovny_s_baliky_nad_30kg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.provozovny_ulozit_balik_na_postu">
+<code class="sig-name descname">provozovny_ulozit_balik_na_postu</code><em class="property"> = '/cpost.cz/adresovani-baliku-na-postu'</em><a class="headerlink" href="#apitalker.resources.CzechPost.provozovny_ulozit_balik_na_postu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.psc">
+<code class="sig-name descname">psc</code><em class="property"> = '/cpost.cz/psc'</em><a class="headerlink" href="#apitalker.resources.CzechPost.psc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.psc_adresni">
+<code class="sig-name descname">psc_adresni</code><em class="property"> = '/cpost.cz/adresni-psc'</em><a class="headerlink" href="#apitalker.resources.CzechPost.psc_adresni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.psc_s_dorucovacim_pasmem">
+<code class="sig-name descname">psc_s_dorucovacim_pasmem</code><em class="property"> = '/cpost.cz/psc-s-dorucovacim-pasmem'</em><a class="headerlink" href="#apitalker.resources.CzechPost.psc_s_dorucovacim_pasmem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.roznasky_propagacnich_materialu_pocty">
+<code class="sig-name descname">roznasky_propagacnich_materialu_pocty</code><em class="property"> = '/cpost.cz/pocty-RIPM'</em><a class="headerlink" href="#apitalker.resources.CzechPost.roznasky_propagacnich_materialu_pocty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.roznasky_propagacnich_materialu_posty">
+<code class="sig-name descname">roznasky_propagacnich_materialu_posty</code><em class="property"> = '/cpost.cz/objednavka-RIPM'</em><a class="headerlink" href="#apitalker.resources.CzechPost.roznasky_propagacnich_materialu_posty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.CzechPost.ulozit_balik_nadrozmer">
+<code class="sig-name descname">ulozit_balik_nadrozmer</code><em class="property"> = '/cpost.cz/ulozeni-baliku-nadrozmer'</em><a class="headerlink" href="#apitalker.resources.CzechPost.ulozit_balik_nadrozmer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.Czso">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">Czso</code><a class="headerlink" href="#apitalker.resources.Czso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Czech Statistical Office, provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/czso.cz/dokumentace">https://www.api.store/czso.cz/dokumentace</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_kraj">
+<code class="sig-name descname">ciselniky_kraj</code><em class="property"> = '/czso.cz/kraj'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_kraj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_mestske_obvody_a_casti">
+<code class="sig-name descname">ciselniky_mestske_obvody_a_casti</code><em class="property"> = '/czso.cz/mestsky-obvod-mestska-cast'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_mestske_obvody_a_casti" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_obce_a_ujezdy">
+<code class="sig-name descname">ciselniky_obce_a_ujezdy</code><em class="property"> = '/czso.cz/obec-a-vojensky-ujezd'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_obce_a_ujezdy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_okres">
+<code class="sig-name descname">ciselniky_okres</code><em class="property"> = '/czso.cz/okres'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_okres" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_region_soudrznosti">
+<code class="sig-name descname">ciselniky_region_soudrznosti</code><em class="property"> = '/czso.cz/region-soudrznosti'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_region_soudrznosti" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_spr_obv_praha">
+<code class="sig-name descname">ciselniky_spr_obv_praha</code><em class="property"> = '/czso.cz/spravni-obvod-v-hlavnim-meste-praze'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_spr_obv_praha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_spr_obv_s_rozsirenou_pusobnosti">
+<code class="sig-name descname">ciselniky_spr_obv_s_rozsirenou_pusobnosti</code><em class="property"> = '/czso.cz/spravni-obvody-obci-s-rozsirenou-pusobnosti'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_spr_obv_s_rozsirenou_pusobnosti" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.ciselniky_stat">
+<code class="sig-name descname">ciselniky_stat</code><em class="property"> = '/czso.cz/stat'</em><a class="headerlink" href="#apitalker.resources.Czso.ciselniky_stat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.cizinci_dle_obcanstvi_veku_pohlavi">
+<code class="sig-name descname">cizinci_dle_obcanstvi_veku_pohlavi</code><em class="property"> = '/czso.cz/cizinci-podle-statniho-obcanstvi-veku-a-pohlavi'</em><a class="headerlink" href="#apitalker.resources.Czso.cizinci_dle_obcanstvi_veku_pohlavi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.hoste_a_prenocovani">
+<code class="sig-name descname">hoste_a_prenocovani</code><em class="property"> = '/czso.cz/hoste-a-prenocovani-v-hromadnych-ubytovacich-zarizenich-podle-zemi'</em><a class="headerlink" href="#apitalker.resources.Czso.hoste_a_prenocovani" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.lide_domy_byty">
+<code class="sig-name descname">lide_domy_byty</code><em class="property"> = '/czso.cz/lide-domy-byty'</em><a class="headerlink" href="#apitalker.resources.Czso.lide_domy_byty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.nadeje_doziti">
+<code class="sig-name descname">nadeje_doziti</code><em class="property"> = '/czso.cz/nadeje-doziti-v-okresech-a-spravnich-obvodech-orp'</em><a class="headerlink" href="#apitalker.resources.Czso.nadeje_doziti" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.obyvatele_sidelni_jednotky">
+<code class="sig-name descname">obyvatele_sidelni_jednotky</code><em class="property"> = '/czso.cz/obyvatele-sidelni-jednotky'</em><a class="headerlink" href="#apitalker.resources.Czso.obyvatele_sidelni_jednotky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.obyvatelstvo_domy">
+<code class="sig-name descname">obyvatelstvo_domy</code><em class="property"> = '/czso.cz/obyvatelstvo-domy'</em><a class="headerlink" href="#apitalker.resources.Czso.obyvatelstvo_domy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.pohyb_obyvatel">
+<code class="sig-name descname">pohyb_obyvatel</code><em class="property"> = '/czso.cz/pohyb-obyvatel-za-cr-kraje-okresy-so-orp-a-obce'</em><a class="headerlink" href="#apitalker.resources.Czso.pohyb_obyvatel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.prumerne_mzdy_odvetvi">
+<code class="sig-name descname">prumerne_mzdy_odvetvi</code><em class="property"> = '/czso.cz/prumerne-mzdy-odvetvi'</em><a class="headerlink" href="#apitalker.resources.Czso.prumerne_mzdy_odvetvi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.prumerne_spotrebitelske_ceny">
+<code class="sig-name descname">prumerne_spotrebitelske_ceny</code><em class="property"> = '/czso.cz/prumerne-spotrebitelske-ceny-vybranych-vyrobku-potravinarske-vyrobky'</em><a class="headerlink" href="#apitalker.resources.Czso.prumerne_spotrebitelske_ceny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Czso.vyjizdky_zamestnani">
+<code class="sig-name descname">vyjizdky_zamestnani</code><em class="property"> = '/czso.cz/vyjizdky-zamestnani'</em><a class="headerlink" href="#apitalker.resources.Czso.vyjizdky_zamestnani" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.DataBoxes">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">DataBoxes</code><a class="headerlink" href="#apitalker.resources.DataBoxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Data Boxes (Datove schranky), provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/datove-schranky/">https://www.api.store/datove-schranky/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.DataBoxes.datove_schranky">
+<code class="sig-name descname">datove_schranky</code><em class="property"> = '/datove-schranky'</em><a class="headerlink" href="#apitalker.resources.DataBoxes.datove_schranky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.EET">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">EET</code><a class="headerlink" href="#apitalker.resources.EET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Electronic Evidence of Revenue (EET) provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/fs.mfcr.cz/">https://www.api.store/fs.mfcr.cz/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.EET.ciselnik_cinnosti_provozoven">
+<code class="sig-name descname">ciselnik_cinnosti_provozoven</code><em class="property"> = '/fs.mfcr.cz/ciselnik'</em><a class="headerlink" href="#apitalker.resources.EET.ciselnik_cinnosti_provozoven" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.EET.eet">
+<code class="sig-name descname">eet</code><em class="property"> = '/fs.mfcr.cz/eet'</em><a class="headerlink" href="#apitalker.resources.EET.eet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.EmployersInInsolvency">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">EmployersInInsolvency</code><a class="headerlink" href="#apitalker.resources.EmployersInInsolvency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Employers in Service sector of the economy provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/sif/">https://www.api.store/sif/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.EmployersInInsolvency.zamestnavatele_v_insolvenci">
+<code class="sig-name descname">zamestnavatele_v_insolvenci</code><em class="property"> = '/sif'</em><a class="headerlink" href="#apitalker.resources.EmployersInInsolvency.zamestnavatele_v_insolvenci" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.EuropeanParliament">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">EuropeanParliament</code><a class="headerlink" href="#apitalker.resources.EuropeanParliament" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of European Parliament provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/evropsky-parlament/">https://www.api.store/evropsky-parlament/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.EuropeanParliament.clenove">
+<code class="sig-name descname">clenove</code><em class="property"> = '/meps'</em><a class="headerlink" href="#apitalker.resources.EuropeanParliament.clenove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.HealthServices">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">HealthServices</code><a class="headerlink" href="#apitalker.resources.HealthServices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Health Service (Zdravotni sluzby), provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/zdravotni-sluzby/">https://www.api.store/zdravotni-sluzby/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.HealthServices.zdravotni_sluzby">
+<code class="sig-name descname">zdravotni_sluzby</code><em class="property"> = '/zdravotni-sluzby'</em><a class="headerlink" href="#apitalker.resources.HealthServices.zdravotni_sluzby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.Jobs">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">Jobs</code><a class="headerlink" href="#apitalker.resources.Jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of available jobs provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/volna-pracovni-mista/">https://www.api.store/volna-pracovni-mista/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.Jobs.volna_pracovni_mista">
+<code class="sig-name descname">volna_pracovni_mista</code><em class="property"> = '/volna-pracovni-mista'</em><a class="headerlink" href="#apitalker.resources.Jobs.volna_pracovni_mista" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.Prague6">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">Prague6</code><a class="headerlink" href="#apitalker.resources.Prague6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Prague 6 provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/praha6.cz/">https://www.api.store/praha6.cz/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.doprava_lokace">
+<code class="sig-name descname">doprava_lokace</code><em class="property"> = '/praha6.cz/traffic/locations'</em><a class="headerlink" href="#apitalker.resources.Prague6.doprava_lokace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.kvalita_ovzdusi_data">
+<code class="sig-name descname">kvalita_ovzdusi_data</code><em class="property"> = '/praha6.cz/airtracker/data'</em><a class="headerlink" href="#apitalker.resources.Prague6.kvalita_ovzdusi_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.kvalita_ovzdusi_jednotky_mereni">
+<code class="sig-name descname">kvalita_ovzdusi_jednotky_mereni</code><em class="property"> = '/praha6.cz/airtracker/measurement-units'</em><a class="headerlink" href="#apitalker.resources.Prague6.kvalita_ovzdusi_jednotky_mereni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.kvalita_ovzdusi_lokace">
+<code class="sig-name descname">kvalita_ovzdusi_lokace</code><em class="property"> = '/praha6.cz/airtracker/locations'</em><a class="headerlink" href="#apitalker.resources.Prague6.kvalita_ovzdusi_lokace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.kvalita_ovzdusi_typ_senzoru">
+<code class="sig-name descname">kvalita_ovzdusi_typ_senzoru</code><em class="property"> = '/praha6.cz/airtracker/sensor-types'</em><a class="headerlink" href="#apitalker.resources.Prague6.kvalita_ovzdusi_typ_senzoru" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.kvalita_ovzdusi_typy_mereni">
+<code class="sig-name descname">kvalita_ovzdusi_typy_mereni</code><em class="property"> = '/praha6.cz/airtracker/measurement-types'</em><a class="headerlink" href="#apitalker.resources.Prague6.kvalita_ovzdusi_typy_mereni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.typ_vozidla_detailni">
+<code class="sig-name descname">typ_vozidla_detailni</code><em class="property"> = '/praha6.cz/traffic/car-types-detail'</em><a class="headerlink" href="#apitalker.resources.Prague6.typ_vozidla_detailni" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.Prague6.typ_vozidla_zjednoduseny">
+<code class="sig-name descname">typ_vozidla_zjednoduseny</code><em class="property"> = '/praha6.cz/traffic/car-types'</em><a class="headerlink" href="#apitalker.resources.Prague6.typ_vozidla_zjednoduseny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.PraguePublicTransportation">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">PraguePublicTransportation</code><a class="headerlink" href="#apitalker.resources.PraguePublicTransportation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of Prague public transportation provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/prazska-integrovana-doprava/">https://www.api.store/prazska-integrovana-doprava/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.PraguePublicTransportation.zastavky">
+<code class="sig-name descname">zastavky</code><em class="property"> = '/pid/zastavky'</em><a class="headerlink" href="#apitalker.resources.PraguePublicTransportation.zastavky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.PublicAuthorities">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">PublicAuthorities</code><a class="headerlink" href="#apitalker.resources.PublicAuthorities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of public authorities provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/organy-verejne-moci/">https://www.api.store/organy-verejne-moci/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.PublicAuthorities.organy_verejne_moci">
+<code class="sig-name descname">organy_verejne_moci</code><em class="property"> = '/ovm'</em><a class="headerlink" href="#apitalker.resources.PublicAuthorities.organy_verejne_moci" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.SUKL">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">SUKL</code><a class="headerlink" href="#apitalker.resources.SUKL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of State Institue for Drug Control (SUKL) provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/sukl.cz/">https://www.api.store/sukl.cz/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.atc_skupina_lp">
+<code class="sig-name descname">atc_skupina_lp</code><em class="property"> = '/sukl.cz/dlp-atc'</em><a class="headerlink" href="#apitalker.resources.SUKL.atc_skupina_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.cesta_podani_lp">
+<code class="sig-name descname">cesta_podani_lp</code><em class="property"> = '/sukl.cz/dlp-cesty'</em><a class="headerlink" href="#apitalker.resources.SUKL.cesta_podani_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_atc_2011_2015">
+<code class="sig-name descname">dodavky_atc_2011_2015</code><em class="property"> = '/sukl.cz/dodavky-lp-2011-2015'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_atc_2011_2015" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_atc_2016">
+<code class="sig-name descname">dodavky_atc_2016</code><em class="property"> = '/sukl.cz/dodavky-atc-2016'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_atc_2016" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_atc_2017">
+<code class="sig-name descname">dodavky_atc_2017</code><em class="property"> = '/sukl.cz/dodavky-atc-2017'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_atc_2017" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_lp_1991_2000">
+<code class="sig-name descname">dodavky_lp_1991_2000</code><em class="property"> = '/sukl.cz/dodavky-lp-1991-2000'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_lp_1991_2000" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_lp_2001_2010">
+<code class="sig-name descname">dodavky_lp_2001_2010</code><em class="property"> = '/sukl.cz/dodavky-lp-2001-2010'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_lp_2001_2010" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dodavky_lp_2018">
+<code class="sig-name descname">dodavky_lp_2018</code><em class="property"> = '/sukl.cz/dodavky-lp-2018'</em><a class="headerlink" href="#apitalker.resources.SUKL.dodavky_lp_2018" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.dokumenty_navazane_k_lp">
+<code class="sig-name descname">dokumenty_navazane_k_lp</code><em class="property"> = '/sukl.cz/dlp-nazvydokumentu'</em><a class="headerlink" href="#apitalker.resources.SUKL.dokumenty_navazane_k_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.doping">
+<code class="sig-name descname">doping</code><em class="property"> = '/sukl.cz/dlp-doping'</em><a class="headerlink" href="#apitalker.resources.SUKL.doping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.indikacni_skupina_lp">
+<code class="sig-name descname">indikacni_skupina_lp</code><em class="property"> = '/sukl.cz/dlp-indikacniskupiny'</em><a class="headerlink" href="#apitalker.resources.SUKL.indikacni_skupina_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.informace_o_drziteli_prav_lp">
+<code class="sig-name descname">informace_o_drziteli_prav_lp</code><em class="property"> = '/sukl.cz/dlp-vpois'</em><a class="headerlink" href="#apitalker.resources.SUKL.informace_o_drziteli_prav_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.jednotka_mnozstvi_latky">
+<code class="sig-name descname">jednotka_mnozstvi_latky</code><em class="property"> = '/sukl.cz/dlp-jednotky'</em><a class="headerlink" href="#apitalker.resources.SUKL.jednotka_mnozstvi_latky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.kategorie_zavislosti_ll">
+<code class="sig-name descname">kategorie_zavislosti_ll</code><em class="property"> = '/sukl.cz/dlp-zavislost'</em><a class="headerlink" href="#apitalker.resources.SUKL.kategorie_zavislosti_ll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.kod_soli_v_latce">
+<code class="sig-name descname">kod_soli_v_latce</code><em class="property"> = '/sukl.cz/dlp-soli'</em><a class="headerlink" href="#apitalker.resources.SUKL.kod_soli_v_latce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lecebny_program_mzcr">
+<code class="sig-name descname">lecebny_program_mzcr</code><em class="property"> = '/sukl.cz/dlp-splp'</em><a class="headerlink" href="#apitalker.resources.SUKL.lecebny_program_mzcr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lecive_pripravky_lp">
+<code class="sig-name descname">lecive_pripravky_lp</code><em class="property"> = '/sukl.cz/dlp-lecivepripravky'</em><a class="headerlink" href="#apitalker.resources.SUKL.lecive_pripravky_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lekarny_pracovni_doba">
+<code class="sig-name descname">lekarny_pracovni_doba</code><em class="property"> = '/sukl.cz/lekarny-prac-doba'</em><a class="headerlink" href="#apitalker.resources.SUKL.lekarny_pracovni_doba" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lekarny_seznam">
+<code class="sig-name descname">lekarny_seznam</code><em class="property"> = '/sukl.cz/lekarny-seznam'</em><a class="headerlink" href="#apitalker.resources.SUKL.lekarny_seznam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lekarny_typ">
+<code class="sig-name descname">lekarny_typ</code><em class="property"> = '/sukl.cz/lekarny-typ'</em><a class="headerlink" href="#apitalker.resources.SUKL.lekarny_typ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.lekova_forma_lp">
+<code class="sig-name descname">lekova_forma_lp</code><em class="property"> = '/sukl.cz/dlp-formy'</em><a class="headerlink" href="#apitalker.resources.SUKL.lekova_forma_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.leky_s_anabolickym_ci_jinym_hormonalnim_ucinkem">
+<code class="sig-name descname">leky_s_anabolickym_ci_jinym_hormonalnim_ucinkem</code><em class="property"> = '/sukl.cz/dlp-narvla'</em><a class="headerlink" href="#apitalker.resources.SUKL.leky_s_anabolickym_ci_jinym_hormonalnim_ucinkem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.nazev_latky">
+<code class="sig-name descname">nazev_latky</code><em class="property"> = '/sukl.cz/dlp-latky'</em><a class="headerlink" href="#apitalker.resources.SUKL.nazev_latky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.nazev_lecive_latky">
+<code class="sig-name descname">nazev_lecive_latky</code><em class="property"> = '/sukl.cz/dlp-lecivelatky'</em><a class="headerlink" href="#apitalker.resources.SUKL.nazev_lecive_latky" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.nazev_obalu_lp">
+<code class="sig-name descname">nazev_obalu_lp</code><em class="property"> = '/sukl.cz/dlp-obaly'</em><a class="headerlink" href="#apitalker.resources.SUKL.nazev_obalu_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.nazev_vyrobce_lp">
+<code class="sig-name descname">nazev_vyrobce_lp</code><em class="property"> = '/sukl.cz/dlp-vyrobci'</em><a class="headerlink" href="#apitalker.resources.SUKL.nazev_vyrobce_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.nazev_zdroje_lp">
+<code class="sig-name descname">nazev_zdroje_lp</code><em class="property"> = '/sukl.cz/dlp-zdroje'</em><a class="headerlink" href="#apitalker.resources.SUKL.nazev_zdroje_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.ochranne_prvky_ano">
+<code class="sig-name descname">ochranne_prvky_ano</code><em class="property"> = '/sukl.cz/ochranne-prvky-ano'</em><a class="headerlink" href="#apitalker.resources.SUKL.ochranne_prvky_ano" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.ochranne_prvky_ne">
+<code class="sig-name descname">ochranne_prvky_ne</code><em class="property"> = '/sukl.cz/ochranne-prvky-ne'</em><a class="headerlink" href="#apitalker.resources.SUKL.ochranne_prvky_ne" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.priznak_slozeni_lp">
+<code class="sig-name descname">priznak_slozeni_lp</code><em class="property"> = '/sukl.cz/dlp-slozenipriznak'</em><a class="headerlink" href="#apitalker.resources.SUKL.priznak_slozeni_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.registracni_procedura_lp">
+<code class="sig-name descname">registracni_procedura_lp</code><em class="property"> = '/sukl.cz/dlp-regproc'</em><a class="headerlink" href="#apitalker.resources.SUKL.registracni_procedura_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.slozeni_lp">
+<code class="sig-name descname">slozeni_lp</code><em class="property"> = '/sukl.cz/dlp-slozeni'</em><a class="headerlink" href="#apitalker.resources.SUKL.slozeni_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.stav_registrace_lp">
+<code class="sig-name descname">stav_registrace_lp</code><em class="property"> = '/sukl.cz/dlp-stavyreg'</em><a class="headerlink" href="#apitalker.resources.SUKL.stav_registrace_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.synonyma_latky_lp">
+<code class="sig-name descname">synonyma_latky_lp</code><em class="property"> = '/sukl.cz/dlp-synonyma'</em><a class="headerlink" href="#apitalker.resources.SUKL.synonyma_latky_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.typ_vydeje_lp">
+<code class="sig-name descname">typ_vydeje_lp</code><em class="property"> = '/sukl.cz/dlp-vydej'</em><a class="headerlink" href="#apitalker.resources.SUKL.typ_vydeje_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.zeme_vyroby_lp">
+<code class="sig-name descname">zeme_vyroby_lp</code><em class="property"> = '/sukl.cz/dlp-zeme'</em><a class="headerlink" href="#apitalker.resources.SUKL.zeme_vyroby_lp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apitalker.resources.SUKL.zkratka_drzitel_registrace_vyrobce">
+<code class="sig-name descname">zkratka_drzitel_registrace_vyrobce</code><em class="property"> = '/sukl.cz/dlp-organizace'</em><a class="headerlink" href="#apitalker.resources.SUKL.zkratka_drzitel_registrace_vyrobce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apitalker.resources.Schools">
+<em class="property">class </em><code class="sig-prename descclassname">apitalker.resources.</code><code class="sig-name descname">Schools</code><a class="headerlink" href="#apitalker.resources.Schools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for mapping API resources of schools provided by Apitalks.</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.api.store/skoly/">https://www.api.store/skoly/</a> (in czech language)</p>
+<dl class="py attribute">
+<dt id="apitalker.resources.Schools.skoly">
+<code class="sig-name descname">skoly</code><em class="property"> = '/skoly'</em><a class="headerlink" href="#apitalker.resources.Schools.skoly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apitalker">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apitalker" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apitalker package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-apitalker.api">apitalker.api module</a></li>
+<li><a class="reference internal" href="#module-apitalker.data">apitalker.data module</a></li>
+<li><a class="reference internal" href="#module-apitalker.resources">apitalker.resources module</a></li>
+<li><a class="reference internal" href="#module-apitalker">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Apitalker’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">apitalker</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/apitalker.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="apitalker"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Apitalker’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Apitalker 1.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apitalker package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Radek &#39;bednaJedna&#39; Bednarik.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+    </div>
+  </body>
+</html>

@@ -5,7 +5,7 @@ with open("./README.md", mode="r", encoding="utf-8") as f:
 
 setup(
     name="apitalker",
-    version="v1.0.0",
+    version="v1.0.1",
     packages=find_packages(),
     install_requires=["requests", "pandas"],
     author="Radek 'bednaJedna' Bednarik",
@@ -16,7 +16,7 @@ setup(
     keywords="api Apitalks wrapper python3 data library utility",
     url="https://github.com/bednaJedna/att",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: Other Audience",
         "License :: OSI Approved :: MIT License",

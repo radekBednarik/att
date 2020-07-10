@@ -6,24 +6,66 @@
 Welcome to Apitalker's documentation!
 =====================================
 
-Apitalker is a Python wrapper for Apitalks REST API service. 
+Apitalker is a Python wrapper for `Apitalks`_ REST API service. 
+
+.. _Apitalks: https://www.api.store/
 
 **Author**: Radek 'bednaJedna' Bednarik
 
 **Installation**: ``pip install apitalker``
 
+**Repository**: `github`_
+
+**PyPi**: here_
+
+.. _here: https://pypi.org/project/apitalker/
+
+.. _github: https://github.com/bednaJedna/att
+
+Some examples to get you started
+--------------------------------
+
+Query single "page" of the API data resource
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To send request and return one "page" of data of given resource, use `apitalker.api.API.query()` method.
+You can also use mapped data resources in `apitalker.resources` for your convenience.::
+
+   from apitalker.api import API, ApiResponse
+   from apitalker.resources import Czso
+
+   api = API("yourapikey")
+
+   r = api.query(Czso.ciselniky_kraj)
+
+   if isinstance(r, ApiResponse):
+      print(r.data)
+
+Query for all data (all "pages") of the API data resource
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To get all data, which are provided by given resource, you have to query the api repeatedly. For that, use
+method `apitalker.api.API.get_data()`.::
+
+   from apitalker.api import API
+   from apitalker.resources import Czso
+
+   api = API("yourapikey")
+
+   data, error = api.get_data(Czso.ciselniky_kraj)
+
+   if error is None:
+      print(data.as_dataframe.head)
+
+Content
+=======
+
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
-   Apitalker
-
-
-Apitalker.API module
-====================
-
-.. automodule:: apitalker.api
-   :members:
-
+   apitalker
+   modules
 
 Indices and tables
 ==================
