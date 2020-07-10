@@ -1,4 +1,4 @@
-class CzsoAll:
+class Czso:
     """Class for mapping API resources of Czech Statistical Office, provided by Apitalks.
 
     References:
@@ -95,3 +95,19 @@ class HealthServices:
     def __init__(self) -> None:
         pass
 
+
+class CzechBusinessInspection:
+    """Class for mapping API resources of Czech Business Inspection (Ceska obchodni inspekce), provided by Apitalks.
+
+    References:
+        https://www.api.store/coi/ (in czech language)
+    """
+
+    rizikove_weby = "/coi/rizikove-weby"
+    sankce = "/coi/sankce"
+    zajisteni = "/coi/zajisteni"
+    zakazy = "/coi/zakazy"
+    zamereni = "/coi/zamereni"
+
+    def __init__(self) -> None:
+        pass
