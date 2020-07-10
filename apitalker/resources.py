@@ -1,3 +1,24 @@
+"""This module provides convenient mappings of currently existing API resources provided by Apitalks.
+
+Resources are mapped using classes, to be able to use `.` [dot] notation (and IntelliSense of IDE of your choice.)
+
+**All resources were NOT tested to be functional**. They were just taken from the documentation.
+
+Example::
+
+    from apitalker.api import API
+    from apitalker.resources import Czso
+
+    api = API("yourapikey")
+
+    data, error = api.get_data(Czso.ciselniky_kraj)
+
+    if error is None:
+        print(data.as_dataframe.head)
+
+"""
+
+
 class Czso:
     """Class for mapping API resources of Czech Statistical Office, provided by Apitalks.
 
