@@ -68,3 +68,16 @@ class CzechPost:
 
     def __init__(self) -> None:
         pass
+
+
+class DataBoxes:
+    """Class for mapping API resources of Data Boxes (Datove schranky), provided by Apitalks.
+
+    References:
+        https://www.api.store/datove-schranky/ (in czech language)
+    """
+
+    datove_schranky = "/datove-schranky"
+
+    def __init__(self) -> None:
+        pass
