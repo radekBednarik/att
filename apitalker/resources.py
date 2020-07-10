@@ -291,3 +291,23 @@ class EET:
 
     def __init__(self) -> None:
         pass
+
+
+class Prague6:
+    """Class for mapping API resources of Prague 6 provided by Apitalks.
+
+    References:
+        https://www.api.store/praha6.cz/ (in czech language)
+    """
+
+    doprava_lokace = "/praha6.cz/traffic/locations"
+    typ_vozidla_zjednoduseny = "/praha6.cz/traffic/car-types"
+    typ_vozidla_detailni = "/praha6.cz/traffic/car-types-detail"
+    kvalita_ovzdusi_lokace = "/praha6.cz/airtracker/locations"
+    kvalita_ovzdusi_data = "/praha6.cz/airtracker/data"
+    kvalita_ovzdusi_typy_mereni = "/praha6.cz/airtracker/measurement-types"
+    kvalita_ovzdusi_jednotky_mereni = "/praha6.cz/airtracker/measurement-units"
+    kvalita_ovzdusi_typ_senzoru = "/praha6.cz/airtracker/sensor-types"
+
+    def __init__(self) -> None:
+        pass
