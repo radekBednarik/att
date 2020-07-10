@@ -311,3 +311,16 @@ class Prague6:
 
     def __init__(self) -> None:
         pass
+
+
+class AuthoritiesJurisdiction:
+    """Class for mapping API resources of authorities territory jurisdiction provided by Apitalks.
+
+    References:
+        https://www.api.store/spadovost/ (in czech language)
+    """
+
+    spadovost = "/spadovost"
+
+    def __init__(self) -> None:
+        pass
