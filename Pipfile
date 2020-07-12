@@ -11,6 +11,8 @@ sphinx = "*"
 pytest = "*"
 pandas = "*"
 rinohtype = "*"
+pytest-xdist = "*"
+tox = "*"
 
 [packages]
 requests = "*"
