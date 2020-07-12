@@ -34,7 +34,7 @@ class Data:
 
         """
         self.as_list: List[Any] = data
-        self.as_dataframe: DataFrame = self.to_dataframe(data=self.as_list)
+        self.as_dataframe: Union[DataFrame, bool] = self.to_dataframe(data=self.as_list)
 
     def to_dataframe(self, data=None) -> Union[DataFrame, bool]:
         """Converts `data` to DataFrame.
@@ -44,7 +44,8 @@ class Data:
 
         Returns:
             Union[pandas.core.frame.DataFrame, bool]
-                * pandas.core.frame.DataFrame: converted API data to pandas DataFrame, if normalization of data was successful.
+                * pandas.core.frame.DataFrame: converted API data to pandas `DataFrame`, if normalization of data was successful. \
+                If data cannot be normalized, returns empty `DataFrame`.
             
                 * False: if normalization raises an `Exception`. Can happen, if data have deeply nested and irregular structure.
         """
