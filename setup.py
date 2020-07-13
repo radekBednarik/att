@@ -5,7 +5,7 @@ with open("./README.md", mode="r", encoding="utf-8") as f:
 
 setup(
     name="apitalker",
-    version="v1.0.3",
+    version="v1.0.4",
     packages=find_packages(),
     install_requires=["requests", "pandas"],
     author="Radek 'bednaJedna' Bednarik",
