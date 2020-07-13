@@ -36,11 +36,13 @@ class Data:
         self.as_list: List[Any] = data
         self.as_dataframe: Union[DataFrame, bool] = self.to_dataframe(data=self.as_list)
 
-    def to_dataframe(self, data=None) -> Union[DataFrame, bool]:
+    def to_dataframe(self, data=None, **kwargs) -> Union[DataFrame, bool]:
         """Converts `data` to DataFrame.
 
         Keyword Args:
             data (Union[None, Any]): data to normalize and convert into `pandas.core.frame.DataFrame`
+            kwargs: keyword args to pass to pandas `_json.normalize()` function, which does the normalization and conversion
+                to `DataFrame`. See References for link.
 
         Returns:
             Union[pandas.core.frame.DataFrame, bool]
@@ -48,9 +50,12 @@ class Data:
                 If data cannot be normalized, returns empty `DataFrame`.
             
                 * False: if normalization raises an `Exception`. Can happen, if data have deeply nested and irregular structure.
+        
+        References:
+            json_normalize: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html#pandas-json-normalize
         """
         try:
-            return _json_normalize(data)
+            return _json_normalize(data, **kwargs)
         except Exception as e:
             print(f"Exception in 'apitalker.data.Data.to_dataframe()': {str(e)}")
             return False
