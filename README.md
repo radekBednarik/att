@@ -19,7 +19,7 @@ Returned data (when method `apitalker.api.API.get_data()` is used) are handled b
 
 ## Documentation <a name= "documentation"></a>
 
-Documentation including examples is [HERE](https://att.readthedocs.io/en/latest/).
+Documentation including examples is [HERE](https://att.readthedocs.io/en/stable/index.html).
 
 ## Getting Started <a name = "getting_started"></a>
 
