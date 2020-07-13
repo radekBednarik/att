@@ -143,45 +143,45 @@ class API(r.Session):
             filter_ = filter_.replace(filter_[-1], where_param_)
 
         # send api request
-        _response = self.get(
+        response_ = self.get(
             resource,
             headers={self.api_auth_name: self.api_key},
             params={"filter": filter_},
         )
-        _json = _response.json()
-        _keys = list(_json.keys())
-        print(f"Requested API resource: '{unquote_plus(_response.request.url)}'")  # type: ignore
+        json_ = response_.json()
+        json_keys = list(json_.keys())
+        print(f"Requested API resource: '{unquote_plus(response_.request.url)}'")  # type: ignore
 
-        if _response.status_code in [200]:
+        if response_.status_code in [200]:
             print("Request successful.")
 
             return ApiResponse(
                 resource=resource,
-                response=_json,
-                data=_json["data"] if "data" in _keys else None,
-                skip=_json["skip"] if "skip" in _keys else None,
-                count=_json["count"] if "count" in _keys else None,
-                limit=_json["limit"] if "limit" in _keys else None,
-                info=_json["info"] if "info" in _keys else None,
-                provider=_json["info"]["provider"] if "info" in _keys else None,
+                response=json_,
+                data=json_["data"] if "data" in json_keys else None,
+                skip=json_["skip"] if "skip" in json_keys else None,
+                count=json_["count"] if "count" in json_keys else None,
+                limit=json_["limit"] if "limit" in json_keys else None,
+                info=json_["info"] if "info" in json_keys else None,
+                provider=json_["info"]["provider"] if "info" in json_keys else None,
             )
 
-        if _response.status_code in [400, 403, 404, 409, 429]:
+        if response_.status_code in [400, 403, 404, 409, 429]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json}."
+                f"API returned error. HTTP response status: {response_.status_code}. Returned message: {json_}."
             )
             return ApiError(
                 resource=resource,
-                response=_json,
-                error=_json["error"] if "error" in _keys else None,
-                status_code=_json["error"]["statusCode"] if "error" in _keys else None,
-                name=_json["error"]["name"] if "error" in _keys else None,
-                message=_json["error"]["message"] if "error" in _keys else None,
+                response=json_,
+                error=json_["error"] if "error" in json_keys else None,
+                status_code=json_["error"]["statusCode"] if "error" in json_keys else None,
+                name=json_["error"]["name"] if "error" in json_keys else None,
+                message=json_["error"]["message"] if "error" in json_keys else None,
             )
 
-        if _response.status_code in [502, 503, 504]:
+        if response_.status_code in [502, 503, 504]:
             print(
-                f"API returned error. HTTP response status: {_response.status_code}. Returned message: {_json}. Retrying..."
+                f"API returned error. HTTP response status: {response_.status_code}. Returned message: {json_}. Retrying..."
             )
             if retries <= 10:
                 sleep(retries * 2)
@@ -198,11 +198,11 @@ class API(r.Session):
             print(f"Retried {retries} times. That is enough.")
             return ApiError(
                 resource=resource,
-                response=_json,
-                error=_json["error"] if "error" in _keys else None,
-                status_code=_json["error"]["statusCode"] if "error" in _keys else None,
-                name=_json["error"]["name"] if "error" in _keys else None,
-                message=_json["error"]["message"] if "error" in _keys else None,
+                response=json_,
+                error=json_["error"] if "error" in json_keys else None,
+                status_code=json_["error"]["statusCode"] if "error" in json_keys else None,
+                name=json_["error"]["name"] if "error" in json_keys else None,
+                message=json_["error"]["message"] if "error" in json_keys else None,
             )
 
         return 1
